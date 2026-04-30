@@ -1,33 +1,33 @@
 {% extends "base.html" %}
 
-{% block title %}Configuração de Workers{% endblock %}
+{% block title %}Configuración de Workers{% endblock %}
 
 {% block content %}
 <section class="page-stack">
     <header class="page-header-card">
         <div class="section-heading">
-            <p class="section-kicker">Execução</p>
-            <h2 class="section-title">Configuração de workers</h2>
-            <p class="section-copy">Controle quantos relatórios podem ser gerados ao mesmo tempo e limpe a fila quando algum envio travar.</p>
+            <p class="section-kicker">Ejecución</p>
+            <h2 class="section-title">Configuración de workers</h2>
+            <p class="section-copy">Controle cuántos reportes pueden ser generados al mismo tiempo y limpie la fila cuando algún envío se trabe.</p>
         </div>
     </header>
 
     <section class="section-panel">
         <div class="section-heading">
             <p class="section-kicker">Workers</p>
-            <h3 class="section-title">Fila de relatórios</h3>
-            <p class="section-copy">Cada worker abre uma sessão de navegador. Aumentar esse número pode elevar o consumo de CPU e memória do servidor.</p>
+            <h3 class="section-title">Fila de reportes</h3>
+            <p class="section-copy">Cada worker abre una sesión de navegador. Aumentar ese número puede elevar el consumo de CPU y memoria del servidor.</p>
         </div>
 
         <div class="execution-config-card top-gap">
             <div class="execution-config-copy">
-                <strong>Quantidade de relatórios simultâneos</strong>
-                <p>Defina o limite entre {{ execution_config.min_allowed }} e {{ execution_config.max_allowed }} workers para processar relatórios em paralelo.</p>
+                <strong>Cantidad de reportes simultáneos</strong>
+                <p>Defina el límite entre {{ execution_config.min_allowed }} y {{ execution_config.max_allowed }} workers para procesar reportes en paralelo.</p>
             </div>
 
             <form id="executionConfigForm" class="execution-config-form">
                 <label>
-                    <span>Workers ativos</span>
+                    <span>Workers activos</span>
                     <input
                         type="number"
                         name="max_concurrent_reports"
@@ -39,8 +39,8 @@
                 </label>
 
                 <div class="execution-config-actions">
-                    <button type="submit" class="primary-button execution-button">Salvar limite</button>
-                    <button type="button" class="danger-button execution-button" id="execution-purge-button">Limpar fila de workers</button>
+                    <button type="submit" class="primary-button execution-button">Guardar límite</button>
+                    <button type="button" class="danger-button execution-button" id="execution-purge-button">Limpiar fila de workers</button>
                 </div>
             </form>
         </div>

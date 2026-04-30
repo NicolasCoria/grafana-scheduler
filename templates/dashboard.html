@@ -12,8 +12,8 @@
     <header class="page-header-card">
         <div class="section-heading">
             <p class="section-kicker">Métricas de uso</p>
-            <h2 class="section-title">Volume de envio, sucesso, canais e execuções paralelas.</h2>
-            <p class="section-copy">Leitura gráfica das execuções recentes usando apenas os intervalos operacionais de 24h, 7d e 30d.</p>
+            <h2 class="section-title">Volumen de envío, éxito, canales y ejecuciones paralelas.</h2>
+            <p class="section-copy">Lectura gráfica de las ejecuciones recientes usando solo los intervalos operativos de 24h, 7d y 30d.</p>
         </div>
 
         <form method="get" class="filter-bar">
@@ -25,34 +25,34 @@
 
     <section class="cards-grid metrics-grid-4">
         <article class="metric-card grafana-card">
-            <span class="metric-label">Relatórios enviados 24h</span>
+            <span class="metric-label">Reportes enviados 24h</span>
             <strong>{{ status_data.window_metrics.sent_last_24h }}</strong>
-            <p>{{ status_data.window_metrics.sent_last_7d }} nos últimos 7 dias.</p>
+            <p>{{ status_data.window_metrics.sent_last_7d }} en los últimos 7 días.</p>
         </article>
         <article class="metric-card grafana-card">
-            <span class="metric-label">Relatórios enviados 30d</span>
+            <span class="metric-label">Reportes enviados 30d</span>
             <strong>{{ status_data.window_metrics.sent_last_30d }}</strong>
-            <p>Retenção operacional total do painel.</p>
+            <p>Retención operativa total del panel.</p>
         </article>
         <article class="metric-card grafana-card">
-            <span class="metric-label">Sucesso</span>
+            <span class="metric-label">Éxito</span>
             <strong>{{ "%.1f"|format(status_data.status_metrics.success_rate) }}%</strong>
-            <p>{{ status_data.status_metrics.success_count }} execução(ões) concluídas.</p>
+            <p>{{ status_data.status_metrics.success_count }} ejecución(es) completadas.</p>
         </article>
         <article class="metric-card grafana-card">
-            <span class="metric-label">Falha</span>
+            <span class="metric-label">Fallo</span>
             <strong>{{ "%.1f"|format(status_data.status_metrics.failure_rate) }}%</strong>
-            <p>{{ status_data.status_metrics.failure_count }} falha(s) registradas.</p>
+            <p>{{ status_data.status_metrics.failure_count }} fallo(s) registrados.</p>
         </article>
         <article class="metric-card grafana-card">
-            <span class="metric-label">Tempo médio</span>
+            <span class="metric-label">Tiempo medio</span>
             <strong>{{ "%.1f"|format(status_data.duration_metrics.average_seconds) }}s</strong>
-            <p>Tempo médio entre o início do processo e a conclusão do envio.</p>
+            <p>Tiempo medio entre el inicio del proceso y la conclusión del envío.</p>
         </article>
         <article class="metric-card grafana-card">
-            <span class="metric-label">Pico de execuções paralelas</span>
+            <span class="metric-label">Pico de ejecuciones paralelas</span>
             <strong>{{ status_data.duration_metrics.worker_peak }}</strong>
-            <p>Maior quantidade de relatórios processados ao mesmo tempo no intervalo.</p>
+            <p>Mayor cantidad de reportes procesados al mismo tiempo en el intervalo.</p>
         </article>
     </section>
 
@@ -60,19 +60,19 @@
         <article class="grafana-card chart-panel chart-panel-compact">
             <div class="panel-header">
                 <div>
-                    <p class="section-kicker">Distribuição</p>
-                    <h3 class="panel-title">Status das execuções</h3>
+                    <p class="section-kicker">Distribución</p>
+                    <h3 class="panel-title">Estado de las ejecuciones</h3>
                 </div>
             </div>
             <div class="chart-area chart-area-sm">
-                <canvas id="dashboardStatusPie"></canvas>
+                <canvas id="dashboardEstadoPie"></canvas>
             </div>
         </article>
 
         <article class="grafana-card chart-panel chart-panel-compact">
             <div class="panel-header">
                 <div>
-                    <p class="section-kicker">Canais</p>
+                    <p class="section-kicker">Canales</p>
                     <h3 class="panel-title">Entrega por canal</h3>
                 </div>
             </div>
@@ -91,9 +91,9 @@
             <div class="panel-header">
                 <div>
                     <p class="section-kicker">Time Series</p>
-                    <h3 class="panel-title">Envios x falhas {% if days == 1 %}por hora{% else %}por dia{% endif %}</h3>
+                    <h3 class="panel-title">Envíos x fallos {% if days == 1 %}por hora{% else %}por día{% endif %}</h3>
                 </div>
-                <span class="panel-meta">Janela: {% if days == 1 %}24h{% elif days == 7 %}7d{% else %}30d{% endif %}</span>
+                <span class="panel-meta">Ventana: {% if days == 1 %}24h{% elif days == 7 %}7d{% else %}30d{% endif %}</span>
             </div>
             <div class="chart-area chart-area-lg">
                 <canvas id="dashboardTimeseries"></canvas>
@@ -103,10 +103,10 @@
         <article class="grafana-card chart-panel chart-panel-full">
             <div class="panel-header">
                 <div>
-                    <p class="section-kicker">Execução paralela</p>
-                    <h3 class="panel-title">Relatórios simultâneos em execução</h3>
+                    <p class="section-kicker">Ejecución paralela</p>
+                    <h3 class="panel-title">Reportes simultáneos en ejecución</h3>
                 </div>
-                <span class="panel-meta">Janela: {% if days == 1 %}24h{% elif days == 7 %}7d{% else %}30d{% endif %}</span>
+                <span class="panel-meta">Ventana: {% if days == 1 %}24h{% elif days == 7 %}7d{% else %}30d{% endif %}</span>
             </div>
             <div class="chart-area chart-area-md">
                 <canvas id="dashboardWorkersTimeseries"></canvas>
@@ -117,8 +117,8 @@
     <section class="grafana-card table-panel">
         <div class="panel-header">
             <div>
-                <p class="section-kicker">Performance</p>
-                <h3 class="panel-title">Relatórios mais lentos</h3>
+                <p class="section-kicker">Rendimiento</p>
+                <h3 class="panel-title">Reportes más lentos</h3>
             </div>
             <span class="panel-meta">Top 10</span>
         </div>
@@ -127,8 +127,8 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Relatório</th>
-                        <th>Tempo de execução</th>
+                        <th>Reporte</th>
+                        <th>Tiempo de ejecución</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -139,7 +139,7 @@
                     </tr>
                     {% else %}
                     <tr>
-                        <td colspan="2">Nenhuma execução com tempo registrado no intervalo.</td>
+                        <td colspan="2">Ninguna ejecución con tiempo registrado en el intervalo.</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -187,10 +187,10 @@
         }
         window.dashboardCharts = [];
 
-        window.dashboardCharts.push(new Chart(document.getElementById("dashboardStatusPie"), {
+        window.dashboardCharts.push(new Chart(document.getElementById("dashboardEstadoPie"), {
             type: "doughnut",
             data: {
-                labels: ["Sucesso", "Falha"],
+                labels: ["Éxito", "Fallo"],
                 datasets: [{
                     data: [statusMetrics.success_count, statusMetrics.failure_count],
                     backgroundColor: ["#3274d9", "#ef843c"],
@@ -241,7 +241,7 @@
                         pointRadius: timeseriesUnit === "hour" ? 2 : 0,
                     },
                     {
-                        label: "Falhas",
+                        label: "Fallos",
                         data: failedSeries,
                         borderColor: "#ef843c",
                         backgroundColor: "rgba(239, 132, 60, 0.08)",
@@ -286,7 +286,7 @@
                 labels,
                 datasets: [
                     {
-                        label: "Execuções paralelas",
+                        label: "Ejecuciones paralelas",
                         data: workerSeries,
                         borderColor: "#67d48c",
                         backgroundColor: "rgba(103, 212, 140, 0.12)",

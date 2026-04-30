@@ -47,7 +47,7 @@ function applyTheme(theme) {
     try {
         localStorage.setItem("grafanaSchedulerTheme", normalizedTheme);
     } catch (error) {
-        console.debug("Nao foi possivel persistir o tema", error);
+        console.debug("No se pudo persistir el tema", error);
     }
 }
 
@@ -115,7 +115,7 @@ function renderTelegramChats(chats, selectedIds = []) {
         if (emptyState) {
             emptyState.classList.remove("hidden");
         }
-        container.innerHTML = '<p class="empty-state">Nenhum chat encontrado para este token.</p>';
+        container.innerHTML = '<p class="empty-state">Ningún chat encontrado para este token.</p>';
         return;
     }
     if (emptyState) {
@@ -160,7 +160,7 @@ function renderSavedTelegramBots(bots) {
                 </div>
                 <div class="inline-actions">
                     <button type="button" class="secondary-button" data-load-telegram-bot="${bot.id}">Editar</button>
-                    <button type="button" class="danger-button" data-delete-telegram-bot="${bot.id}">Excluir</button>
+                    <button type="button" class="danger-button" data-delete-telegram-bot="${bot.id}">Eliminar</button>
                 </div>
             </div>
             `
@@ -191,13 +191,13 @@ function bindTelegramBotActions() {
                 tokenInput.value = "";
             }
             renderTelegramChats(bot.selected_chats, bot.selected_chats.map((chat) => String(chat.chat_id)));
-            showFeedback("telegram-config-feedback", "success", `Editando configuracao do bot ${bot.nome}.`);
+            showFeedback("telegram-config-feedback", "success", `Editando configuración del bot ${bot.nome}.`);
         });
     });
 
     container.querySelectorAll("[data-delete-telegram-bot]").forEach((button) => {
         button.addEventListener("click", async () => {
-            if (!window.confirm("Excluir este bot Telegram?")) {
+            if (!window.confirm("Eliminar este bot Telegram?")) {
                 return;
             }
             const response = await fetch(`/api/configuracoes/telegram/${button.dataset.deleteTelegramBot}`, { method: "DELETE" });
@@ -309,7 +309,7 @@ function buildWizardEmailRow(email = "") {
                 <span>E-mail</span>
                 <input type="email" name="emails[]" value="${escapeHtml(email)}" required>
             </label>
-            <button type="button" class="danger-button remove-email-button">Remover</button>
+            <button type="button" class="danger-button remove-email-button">Eliminar</button>
         </div>
     `;
 }
@@ -353,14 +353,14 @@ function validateWizardEmailRecipients() {
         invalidInput.required = true;
         invalidInput.reportValidity();
         invalidInput.focus();
-        showFeedback("schedule-feedback", "error", "Informe pelo menos um destinatario de e-mail.");
+        showFeedback("schedule-feedback", "error", "Informe por lo menos un destinatario de e-mail.");
         return false;
     }
 
     const malformedInput = inputs.find((input) => !input.reportValidity());
     if (malformedInput) {
         malformedInput.focus();
-        showFeedback("schedule-feedback", "error", "Revise os destinatarios de e-mail informados.");
+        showFeedback("schedule-feedback", "error", "Revise los destinatarios de e-mail informados.");
         return false;
     }
 
@@ -377,7 +377,7 @@ function renderGrafanaCatalog(catalog) {
     const { folders, dashboards_without_folder: dashboardsWithoutFolder } = catalog;
 
     if (!folders.length && !dashboardsWithoutFolder.length) {
-        container.innerHTML = '<p class="empty-state catalog-empty-state">Nenhuma dashboard encontrada.</p>';
+        container.innerHTML = '<p class="empty-state catalog-empty-state">Ningún dashboard encontrado.</p>';
         return;
     }
 
@@ -402,7 +402,7 @@ function renderGrafanaCatalog(catalog) {
                     `
                 )
                 .join("")
-            : '<p class="empty-state catalog-empty-state">Nenhuma dashboard nesta pasta.</p>';
+            : '<p class="empty-state catalog-empty-state">Ningún dashboard en esta carpeta.</p>';
 
         container.insertAdjacentHTML(
             "beforeend",
@@ -422,7 +422,7 @@ function renderGrafanaCatalog(catalog) {
             "beforeend",
             `
             <section class="catalog-folder">
-                <div class="catalog-item folder-item folder-heading"><strong>Dashboards sem folder</strong></div>
+                <div class="catalog-item folder-item folder-heading"><strong>Dashboards sin carpeta</strong></div>
                 <div class="catalog-dashboards">
                     ${dashboardsWithoutFolder
                         .map(
@@ -458,7 +458,7 @@ function syncDeliverySections() {
     const methods = collectDeliveryMethods();
     const emailSection = document.getElementById("wizard-email-section");
     const telegramSection = document.getElementById("wizard-telegram-summary");
-    const telegramStatus = document.getElementById("wizard-telegram-config-status");
+    const telegramEstado = document.getElementById("wizard-telegram-config-status");
     const emailInputs = methods.includes("email") ? ensureWizardEmailInputs() : getWizardEmailInputs();
     const wizardForm = document.getElementById("scheduleWizardForm");
     const telegramConfig = wizardForm ? JSON.parse(wizardForm.dataset.telegram || "{}") : {};
@@ -471,10 +471,10 @@ function syncDeliverySections() {
     if (telegramSection) {
         telegramSection.classList.toggle("hidden", !methods.includes("telegram"));
     }
-    if (telegramStatus) {
-        telegramStatus.textContent = botCount && chatCount
-            ? `${botCount} bot(s) e ${chatCount} chat(s) serao usados neste agendamento.`
-            : "Nenhum bot ou chat Telegram esta configurado.";
+    if (telegramEstado) {
+        telegramEstado.textContent = botCount && chatCount
+            ? `${botCount} bot(s) e ${chatCount} chat(s) serán usados en esta programación.`
+            : "Ningún bot o chat Telegram está configurado.";
     }
     emailInputs.forEach((input) => {
         input.required = methods.includes("email");
@@ -514,7 +514,7 @@ function readFileAsDataUrl(file) {
         }
         const reader = new FileReader();
         reader.onload = () => resolve(String(reader.result || ""));
-        reader.onerror = () => reject(new Error("Falha ao ler arquivo."));
+        reader.onerror = () => reject(new Errorr("Fallo al leer archivo."));
         reader.readAsDataURL(file);
     });
 }
@@ -543,7 +543,7 @@ function renderReportTemplateCards(templates) {
     }
     container.dataset.templates = JSON.stringify(templates);
     if (!templates.length) {
-        container.innerHTML = '<p class="empty-state">Nenhum template cadastrado.</p>';
+        container.innerHTML = '<p class="empty-state">Ningún template registrado.</p>';
         return;
     }
     container.innerHTML = templates.map((template) => `
@@ -552,16 +552,16 @@ function renderReportTemplateCards(templates) {
                 <div class="template-library-copy">
                     <p class="card-kicker">Template</p>
                     <strong>${escapeHtml(template.nome)}</strong>
-                    <p>${escapeHtml(template.header_text || "Sem cabecalho definido")}</p>
+                    <p>${escapeHtml(template.header_text || "Sin encabezado definido")}</p>
                 </div>
                 <div class="template-library-actions">
                     <button type="button" class="table-action-button secondary-button" data-edit-report-template="${template.id}">Editar</button>
-                    <button type="button" class="table-action-button danger-button" data-delete-report-template="${template.id}">Excluir</button>
+                    <button type="button" class="table-action-button danger-button" data-delete-report-template="${template.id}">Eliminar</button>
                 </div>
             </div>
             <div class="template-meta-grid">
                 <div class="template-meta-item">
-                    <span class="template-meta-label">Fonte</span>
+                    <span class="template-meta-label">Fuente</span>
                     <strong>${escapeHtml(template.font_family)}</strong>
                 </div>
                 <div class="template-meta-item">
@@ -574,7 +574,7 @@ function renderReportTemplateCards(templates) {
                 </div>
                 <div class="template-meta-item">
                     <span class="template-meta-label">Estrutura</span>
-                    <strong>${template.show_summary ? "Com sumario" : "Sem sumario"}</strong>
+                    <strong>${template.show_summary ? "Con sumario" : "Sin sumario"}</strong>
                 </div>
             </div>
         </article>
@@ -589,7 +589,7 @@ function syncReportTemplateSelects(templates) {
         }
         const currentValue = select.value;
         select.innerHTML = [
-            '<option value="">Template padrao do sistema</option>',
+            '<option value="">Template estándar del sistema</option>',
             ...templates.map((template) => `<option value="${template.id}">${escapeHtml(template.nome)}</option>`),
         ].join("");
         if (currentValue && templates.some((template) => String(template.id) === String(currentValue))) {
@@ -634,13 +634,13 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("grafana-catalog").innerHTML = "";
         rebuildWizardEmailList([""]);
         if (wizardModeTitle) {
-            wizardModeTitle.textContent = "Novo Agendamento";
+            wizardModeTitle.textContent = "Nueva Programación";
         }
         if (wizardModeCopy) {
-            wizardModeCopy.textContent = "Preencha o fluxo completo e salve quando estiver pronto.";
+            wizardModeCopy.textContent = "Llene el flujo completo y guarde cuando esté listo.";
         }
         if (wizardSubmit) {
-            wizardSubmit.textContent = "Salvar Agendamento";
+            wizardSubmit.textContent = "Guardar Programación";
         }
         if (wizardCancelEdit) {
             wizardCancelEdit.classList.add("hidden");
@@ -664,7 +664,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.querySelectorAll("[data-delete-schedule]").forEach((button) => {
         button.addEventListener("click", async () => {
-            if (!window.confirm("Excluir este agendamento?")) {
+            if (!window.confirm("Eliminar esta programación?")) {
                 return;
             }
             const response = await fetch(`/api/agendamentos/${button.dataset.deleteSchedule}`, { method: "DELETE" });
@@ -676,7 +676,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.querySelectorAll("[data-run-schedule]").forEach((button) => {
         button.addEventListener("click", async () => {
-            if (!window.confirm("Executar este agendamento imediatamente?")) {
+            if (!window.confirm("Ejecutar esta programación inmediatamente?")) {
                 return;
             }
             const response = await fetch(`/api/agendamentos/${button.dataset.runSchedule}/executar`, { method: "POST" });
@@ -701,10 +701,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 grafanaServerIdInput.value = "";
             }
             if (grafanaServerFormTitle) {
-                grafanaServerFormTitle.textContent = "Nova origem Grafana";
+                grafanaServerFormTitle.textContent = "Nuevo origen Grafana";
             }
             if (grafanaServerFormCopy) {
-                grafanaServerFormCopy.textContent = "Informe os dados da origem que sera usada no wizard e no scheduler.";
+                grafanaServerFormCopy.textContent = "Informe los datos del origen que será usado en el wizard y en el scheduler.";
             }
             if (grafanaServerSubmit) {
                 grafanaServerSubmit.textContent = "Salvar servidor";
@@ -736,13 +736,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 tokenInput.required = false;
             }
             if (grafanaServerFormTitle) {
-                grafanaServerFormTitle.textContent = "Editar origem Grafana";
+                grafanaServerFormTitle.textContent = "Editar origen Grafana";
             }
             if (grafanaServerFormCopy) {
-                grafanaServerFormCopy.textContent = "Atualize nome, URL e credenciais somente se precisar trocar os valores atuais.";
+                grafanaServerFormCopy.textContent = "Actualice nombre, URL y credenciales solo si necesita cambiar los valores actuales.";
             }
             if (grafanaServerSubmit) {
-                grafanaServerSubmit.textContent = "Salvar alteracoes";
+                grafanaServerSubmit.textContent = "Guardar alteraciones";
             }
             if (grafanaServerCancel) {
                 grafanaServerCancel.classList.remove("hidden");
@@ -787,12 +787,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.querySelectorAll("[data-delete-server]").forEach((button) => {
         button.addEventListener("click", async () => {
-            if (!window.confirm("Excluir este servidor Grafana?")) {
+            if (!window.confirm("Eliminar este servidor Grafana?")) {
                 return;
             }
             const response = await fetch(`/api/servidores-grafana/${button.dataset.deleteServer}`, { method: "DELETE" });
-            const body = await response.json().catch(() => ({ message: "Falha ao excluir servidor Grafana." }));
-            showFeedback("grafana-server-feedback", response.ok ? "success" : "error", body.message || "Falha ao excluir servidor Grafana.");
+            const body = await response.json().catch(() => ({ message: "Fallo ao excluir servidor Grafana." }));
+            showFeedback("grafana-server-feedback", response.ok ? "success" : "error", body.message || "Fallo ao excluir servidor Grafana.");
             if (response.ok) {
                 window.location.reload();
             }
@@ -829,7 +829,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const tokenInput = document.getElementById("telegram-bot-token");
             const botToken = tokenInput.value.trim();
             if (!botToken) {
-                showFeedback("telegram-config-feedback", "error", "Informe o Bot Token para buscar chats.");
+                showFeedback("telegram-config-feedback", "error", "Informe el Bot Token para buscar chats.");
                 return;
             }
 
@@ -845,7 +845,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             renderTelegramChats(body.chats);
-            showFeedback("telegram-config-feedback", "success", "Chats carregados com sucesso.");
+            showFeedback("telegram-config-feedback", "success", "Chats cargados con éxito.");
         });
     }
 
@@ -985,7 +985,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (aiTestButton) {
             aiTestButton.addEventListener("click", async () => {
                 aiTestButton.disabled = true;
-                aiTestButton.textContent = "Testando...";
+                aiTestButton.textContent = "Probando...";
                 hideFeedback("ai-config-feedback");
 
                 try {
@@ -996,12 +996,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     });
                     const body = await response.json();
                     const preview = body.response_preview ? `\nResposta: ${body.response_preview}` : "";
-                    showFeedback("ai-config-feedback", response.ok ? "success" : "error", `${body.message || "Falha ao testar a conexao."}${preview}`);
+                    showFeedback("ai-config-feedback", response.ok ? "success" : "error", `${body.message || "Fallo ao testar a conexao."}${preview}`);
                 } catch (error) {
-                    showFeedback("ai-config-feedback", "error", `Falha ao testar a conexao com a IA: ${error.message}`);
+                    showFeedback("ai-config-feedback", "error", `Fallo ao testar a conexao com a IA: ${error.message}`);
                 } finally {
                     aiTestButton.disabled = false;
-                    aiTestButton.textContent = "Testar conexao";
+                    aiTestButton.textContent = "Probar conexión";
                 }
             });
         }
@@ -1043,23 +1043,23 @@ document.addEventListener("DOMContentLoaded", () => {
                 showFeedback(
                     "execution-config-feedback",
                     response.ok ? "success" : "error",
-                    body.message || "Falha ao salvar a configuracao de execucao.",
+                    body.message || "Fallo ao salvar a configuracao de execucao.",
                 );
             } catch (error) {
-                showFeedback("execution-config-feedback", "error", `Falha ao salvar a configuracao de execucao: ${error.message}`);
+                showFeedback("execution-config-feedback", "error", `Fallo ao salvar a configuracao de execucao: ${error.message}`);
             }
         });
 
         if (executionPurgeButton) {
             executionPurgeButton.addEventListener("click", async () => {
-                if (!window.confirm("Limpar toda a fila de workers e cancelar os envios em andamento?")) {
+                if (!window.confirm("Limpiar toda a fila de workers e cancelar os envios em andamento?")) {
                     return;
                 }
 
                 hideFeedback("execution-config-feedback");
                 executionPurgeButton.disabled = true;
                 const originalLabel = executionPurgeButton.textContent;
-                executionPurgeButton.textContent = "Limpando fila...";
+                executionPurgeButton.textContent = "Limpiando fila...";
 
                 try {
                     const response = await fetch("/api/configuracoes/execution/purge", {
@@ -1070,10 +1070,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     showFeedback(
                         "execution-config-feedback",
                         response.ok ? "success" : "error",
-                        body.message || "Falha ao limpar a fila de workers.",
+                        body.message || "Fallo ao limpar a fila de workers.",
                     );
                 } catch (error) {
-                    showFeedback("execution-config-feedback", "error", `Falha ao limpar a fila de workers: ${error.message}`);
+                    showFeedback("execution-config-feedback", "error", `Fallo ao limpar a fila de workers: ${error.message}`);
                 } finally {
                     executionPurgeButton.disabled = false;
                     executionPurgeButton.textContent = originalLabel;
@@ -1113,7 +1113,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     </div>
                     <div class="compact-actions">
                         <button type="button" class="secondary-button" data-edit-ai-prompt="${prompt.id}">Editar</button>
-                        <button type="button" class="danger-button" data-delete-ai-prompt="${prompt.id}">Excluir</button>
+                        <button type="button" class="danger-button" data-delete-ai-prompt="${prompt.id}">Eliminar</button>
                     </div>
                 </article>
             `).join("");
@@ -1136,7 +1136,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             document.querySelectorAll("[data-delete-ai-prompt]").forEach((button) => {
                 button.addEventListener("click", async () => {
-                    if (!window.confirm("Excluir este prompt?")) {
+                    if (!window.confirm("Eliminar este prompt?")) {
                         return;
                     }
                     const response = await fetch(`/api/prompts/${button.dataset.deleteAiPrompt}`, { method: "DELETE" });
@@ -1222,9 +1222,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     <article class="token-item" data-api-token-id="${escapeHtml(token.id)}">
                         <div>
                             <strong>${escapeHtml(token.nome)}</strong>
-                            <span>Criado em ${escapeHtml(token.created_at || "")}</span>
+                            <span>Creado en ${escapeHtml(token.created_at || "")}</span>
                         </div>
-                        <button type="button" class="danger-button" data-delete-api-token="${escapeHtml(token.id)}">Remover</button>
+                        <button type="button" class="danger-button" data-delete-api-token="${escapeHtml(token.id)}">Eliminar</button>
                     </article>
                     `
                 )
@@ -1358,7 +1358,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             document.querySelectorAll("[data-delete-report-template]").forEach((button) => {
                 button.addEventListener("click", async () => {
-                    if (!window.confirm("Excluir este template de relatorio?")) {
+                    if (!window.confirm("Eliminar este template de relatorio?")) {
                         return;
                     }
                     const response = await fetch(`/api/relatorios/templates/${button.dataset.deleteReportTemplate}`, { method: "DELETE" });
@@ -1501,11 +1501,11 @@ document.addEventListener("DOMContentLoaded", () => {
             if (step === 2) {
                 const selectedTargets = collectSelectedTargets();
                 if (!loadedCatalog) {
-                    showFeedback("schedule-feedback", "error", "Carregue o catalogo do servidor Grafana.");
+                    showFeedback("schedule-feedback", "error", "Cargue el catálogo del servidor Grafana.");
                     return false;
                 }
                 if (!selectedTargets.length) {
-                    showFeedback("schedule-feedback", "error", "Selecione uma dashboard.");
+                    showFeedback("schedule-feedback", "error", "Seleccione un dashboard.");
                     return false;
                 }
             }
@@ -1513,14 +1513,14 @@ document.addEventListener("DOMContentLoaded", () => {
             if (step === 4) {
                 const deliveryMethods = collectDeliveryMethods();
                 if (!deliveryMethods.length) {
-                    showFeedback("schedule-feedback", "error", "Selecione ao menos um metodo de envio.");
+                    showFeedback("schedule-feedback", "error", "Seleccione al menos un método de envío.");
                     return false;
                 }
                 if (!validateWizardEmailRecipients()) {
                     return false;
                 }
                 if (deliveryMethods.includes("telegram") && !Number(currentTelegramConfig.chat_count || 0)) {
-                    showFeedback("schedule-feedback", "error", "Telegram foi selecionado, mas nao ha chats configurados.");
+                    showFeedback("schedule-feedback", "error", "Telegram fue seleccionado, pero no hay chats configurados.");
                     return false;
                 }
             }
@@ -1539,7 +1539,7 @@ document.addEventListener("DOMContentLoaded", () => {
             loadedCatalog = body.catalog;
             renderGrafanaCatalog(body.catalog);
             applySelectedTargetsToCatalog(selectedTargets);
-                showFeedback("grafana-catalog-feedback", "success", "Catálogo do Grafana carregado.");
+                showFeedback("grafana-catalog-feedback", "success", "Catálogo de Grafana cargado.");
             hideFeedback("schedule-feedback");
             return true;
         };
@@ -1552,10 +1552,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 wizardModeTitle.textContent = `Editando #${schedule.id}`;
             }
             if (wizardModeCopy) {
-                wizardModeCopy.textContent = "Ajuste o agendamento existente e salve para substituir a configuracao atual.";
+                wizardModeCopy.textContent = "Ajuste la programación existente y guarde para sustituir la configuración actual.";
             }
             if (wizardSubmit) {
-                wizardSubmit.textContent = "Atualizar Agendamento";
+                wizardSubmit.textContent = "Atualizar Programación";
             }
             if (wizardCancelEdit) {
                 wizardCancelEdit.classList.remove("hidden");
@@ -1670,7 +1670,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const select = document.getElementById("grafana-server-select");
                 const serverId = select.value;
                 if (!serverId) {
-                    showFeedback("grafana-catalog-feedback", "error", "Selecione um servidor Grafana.");
+                    showFeedback("grafana-catalog-feedback", "error", "Seleccione un servidor Grafana.");
                     return;
                 }
                 await loadCatalog(serverId);
@@ -1721,11 +1721,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const selectedTargets = collectSelectedTargets();
             const deliveryMethods = collectDeliveryMethods();
             if (!selectedTargets.length) {
-                showFeedback("schedule-feedback", "error", "Selecione uma dashboard.");
+                showFeedback("schedule-feedback", "error", "Seleccione un dashboard.");
                 return;
             }
             if (!deliveryMethods.length) {
-                showFeedback("schedule-feedback", "error", "Selecione ao menos um metodo de envio.");
+                showFeedback("schedule-feedback", "error", "Seleccione al menos un método de envío.");
                 return;
             }
             if (!validateWizardEmailRecipients()) {
@@ -1733,7 +1733,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             const currentTelegramConfig = JSON.parse(wizardForm.dataset.telegram || "{}");
             if (deliveryMethods.includes("telegram") && !Number(currentTelegramConfig.chat_count || 0)) {
-                showFeedback("schedule-feedback", "error", "Telegram foi selecionado, mas nao ha chats configurados.");
+                showFeedback("schedule-feedback", "error", "Telegram fue seleccionado, pero no hay chats configurados.");
                 return;
             }
             if (useAiInput?.checked && !aiConfig.api_key_configured) {

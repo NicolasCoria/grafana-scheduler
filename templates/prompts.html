@@ -6,36 +6,36 @@
 <section class="page-stack">
     <header class="hero-panel">
         <p class="hero-kicker">Prompts</p>
-        <h2 class="hero-title">Biblioteca de instrucoes para as analises de IA.</h2>
+        <h2 class="hero-title">Biblioteca de instrucciones para los análisis de IA.</h2>
         <p class="hero-copy">
-            Crie prompts reutilizaveis para orientar a interpretacao dos paineis, das dashboards e do resumo final. O scheduler combina esse texto com metadados resumidos e a imagem correspondente em cada requisicao.
+            Cree prompts reutilizables para orientar la interpretación de los paneles, de los dashboards y del resumen final. El scheduler combina este texto con metadatos resumidos y la imagen correspondiente en cada solicitud.
         </p>
     </header>
 
     <div class="grid gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
         <section class="section-panel">
             <div class="section-heading">
-                <p class="section-kicker">Cadastro</p>
-                <h3 class="section-title">Novo prompt</h3>
-                <p class="section-copy">Use um titulo curto para identificar o objetivo do prompt e escreva o texto principal que sera combinado com os metadados da dashboard e do painel.</p>
+                <p class="section-kicker">Registro</p>
+                <h3 class="section-title">Nuevo prompt</h3>
+                <p class="section-copy">Use un título corto para identificar el objetivo del prompt y escriba el texto principal que será combinado con los metadatos del dashboard y del panel.</p>
             </div>
 
             <form id="aiPromptForm" class="form-grid mt-6" data-prompts='{{ ai_prompts.prompts | tojson }}'>
                 <input type="hidden" id="ai-prompt-id">
 
                 <label class="span-2">
-                    <span>Titulo do prompt</span>
-                    <input type="text" id="ai-prompt-title" placeholder="Ex.: Analise executiva de incidentes" required>
+                    <span>Título del prompt</span>
+                    <input type="text" id="ai-prompt-title" placeholder="Ej.: Análisis ejecutivo de incidentes" required>
                 </label>
 
                 <label class="span-2">
                     <span>Prompt</span>
-                    <textarea id="ai-prompt-text" rows="12" placeholder="Explique como a IA deve interpretar o painel, quais sinais priorizar e o tom esperado da analise." required></textarea>
+                    <textarea id="ai-prompt-text" rows="12" placeholder="Explique cómo la IA debe interpretar el panel, qué señales priorizar y el tono esperado del análisis." required></textarea>
                 </label>
 
                 <div class="inline-actions span-2">
-                    <button type="submit">Salvar prompt</button>
-                    <button type="button" class="secondary-button" id="ai-prompt-clear">Limpar formulario</button>
+                    <button type="submit">Guardar prompt</button>
+                    <button type="button" class="secondary-button" id="ai-prompt-clear">Limpiar formulario</button>
                 </div>
             </form>
 
@@ -45,8 +45,8 @@
         <section class="section-panel">
             <div class="section-heading">
                 <p class="section-kicker">Biblioteca</p>
-                <h3 class="section-title">Prompts salvos</h3>
-                <p class="section-copy">Edite, remova e reutilize qualquer prompt nos agendamentos com IA ativa.</p>
+                <h3 class="section-title">Prompts guardados</h3>
+                <p class="section-copy">Edite, elimine y reutilice cualquier prompt en las programaciones con IA activa.</p>
             </div>
 
             <div id="ai-prompt-list" class="template-list mt-6" data-prompts='{{ ai_prompts.prompts | tojson }}'>
@@ -60,13 +60,13 @@
                             </div>
                             <div class="inline-actions">
                                 <button type="button" class="secondary-button" data-edit-ai-prompt="{{ prompt.id }}">Editar</button>
-                                <button type="button" class="danger-button" data-delete-ai-prompt="{{ prompt.id }}">Excluir</button>
+                                <button type="button" class="danger-button" data-delete-ai-prompt="{{ prompt.id }}">Eliminar</button>
                             </div>
                         </div>
                     </article>
                     {% endfor %}
                 {% else %}
-                    <p class="empty-state">Nenhum prompt cadastrado.</p>
+                    <p class="empty-state">Ningún prompt registrado.</p>
                 {% endif %}
             </div>
         </section>

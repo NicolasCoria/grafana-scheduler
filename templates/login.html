@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,14 +10,14 @@
     <main class="login-shell">
         <section class="login-card">
             <div class="login-copy">
-                <p class="app-topbar-kicker">Acesso Administrativo</p>
+                <p class="app-topbar-kicker">Acceso Administrativo</p>
                 <h1>Grafana Scheduler</h1>
-                <p>Entre com a conta administrativa para acessar agendamentos, configuracoes e operacao do scheduler.</p>
+                <p>Entre con la cuenta administrativa para acceder a programaciones, configuraciones y operación del scheduler.</p>
             </div>
 
             {% if not auth_configured %}
             <div class="feedback error">
-                Configure `ADMIN_USERNAME` e `ADMIN_PASSWORD_HASH` antes de iniciar a aplicacao em producao.
+                Configure `ADMIN_USERNAME` y `ADMIN_PASSWORD_HASH` antes de iniciar la aplicación en producción.
             </div>
             {% endif %}
 
@@ -34,7 +34,7 @@
                 </label>
 
                 <label>
-                    <span>Senha</span>
+                    <span>Contraseña</span>
                     <input type="password" name="password" autocomplete="current-password" required>
                 </label>
 

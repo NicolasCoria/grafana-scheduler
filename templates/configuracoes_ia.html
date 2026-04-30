@@ -1,33 +1,33 @@
 {% extends "base.html" %}
 
-{% block title %}Configuração de IA{% endblock %}
+{% block title %}Configuración de IA{% endblock %}
 
 {% block content %}
 <section class="page-stack">
     <header class="page-header-card">
         <div class="section-heading">
             <p class="section-kicker">IA</p>
-            <h2 class="section-title">Configuração de IA</h2>
-            <p class="section-copy">Defina o provedor usado nas análises e mantenha uma biblioteca enxuta de prompts reutilizáveis.</p>
+            <h2 class="section-title">Configuración de IA</h2>
+            <p class="section-copy">Defina el proveedor usado en los análisis y mantenga una biblioteca de prompts reutilizables.</p>
         </div>
     </header>
 
     <section class="section-panel">
         <div class="section-heading">
             <p class="section-kicker">Runtime</p>
-            <h3 class="section-title">Provedor e credenciais</h3>
-            <p class="section-copy">Escolha o provedor ativo e salve as credenciais usadas nos relatórios.</p>
+            <h3 class="section-title">Proveedor y credenciales</h3>
+            <p class="section-copy">Elija el proveedor activo y guarde las credenciales usadas en los reportes.</p>
         </div>
 
         {% if ai_config.provider_needs_review %}
         <div class="feedback error top-gap">
-            A configuração anterior usava um provedor que não é mais suportado ({{ ai_config.original_provider }}). Revise e salve novamente.
+            La configuración anterior usaba un proveedor que ya no es soportado ({{ ai_config.original_provider }}). Revise y guarde nuevamente.
         </div>
         {% endif %}
 
         <form id="aiConfigForm" class="form-grid top-gap ai-runtime-form">
             <label>
-                <span>Provedor</span>
+                <span>Proveedor</span>
                 <select name="provider" id="ai-provider-select" required>
                     <option value="openai" {% if ai_config.provider == 'openai' %}selected{% endif %}>OpenAI</option>
                     <option value="azure" {% if ai_config.provider == 'azure' %}selected{% endif %}>Azure AI Foundry</option>
@@ -42,17 +42,17 @@
 
             <label class="span-2">
                 <span>API Key</span>
-                <input type="password" name="api_key" placeholder="{% if ai_config.api_key_configured %}Já configurada. Preencha apenas para trocar.{% else %}Informe a API Key{% endif %}">
+                <input type="password" name="api_key" placeholder="{% if ai_config.api_key_configured %}Ya configurada. Llene solo para cambiar.{% else %}Informe la API Key{% endif %}">
             </label>
 
             <label id="ai-endpoint-wrapper" class="span-2 {% if ai_config.provider != 'azure' %}hidden{% endif %}">
-                <span>Endpoint do Azure</span>
-                <input type="url" name="endpoint" value="{{ ai_config.endpoint }}" placeholder="Base do Azure OpenAI /openai/v1 ou endpoint do Azure AI Foundry">
+                <span>Endpoint de Azure</span>
+                <input type="url" name="endpoint" value="{{ ai_config.endpoint }}" placeholder="Base de Azure OpenAI /openai/v1 o endpoint de Azure AI Foundry">
             </label>
 
             <div class="inline-actions span-2">
-                <button type="button" class="secondary-button" id="ai-test-button">Testar conexão</button>
-                <button type="submit">Salvar credenciais</button>
+                <button type="button" class="secondary-button" id="ai-test-button">Probar conexión</button>
+                <button type="submit">Guardar credenciales</button>
             </div>
         </form>
 
@@ -62,8 +62,8 @@
     <section class="section-panel">
         <div class="section-heading">
             <p class="section-kicker">Biblioteca</p>
-            <h3 class="section-title">Prompts reutilizáveis</h3>
-            <p class="section-copy">Salve instruções reutilizáveis para os agendamentos com IA ativa.</p>
+            <h3 class="section-title">Prompts reutilizables</h3>
+            <p class="section-copy">Guarde instrucciones reutilizables para las programaciones con IA activa.</p>
         </div>
 
         <div class="prompt-library-layout top-gap">
@@ -71,18 +71,18 @@
                 <input type="hidden" id="ai-prompt-id">
 
                 <label>
-                    <span>Título do prompt</span>
-                    <input type="text" id="ai-prompt-title" placeholder="Ex.: Leitura executiva" required>
+                    <span>Título del prompt</span>
+                    <input type="text" id="ai-prompt-title" placeholder="Ej.: Lectura ejecutiva" required>
                 </label>
 
                 <label>
                     <span>Prompt</span>
-                    <textarea id="ai-prompt-text" rows="7" placeholder="Descreva como a IA deve interpretar a dashboard e qual tom deve usar." required></textarea>
+                    <textarea id="ai-prompt-text" rows="7" placeholder="Describa cómo la IA debe interpretar el dashboard y qué tono debe usar." required></textarea>
                 </label>
 
                 <div class="inline-actions">
-                    <button type="submit">Salvar prompt</button>
-                    <button type="button" class="secondary-button" id="ai-prompt-clear">Limpar</button>
+                    <button type="submit">Guardar prompt</button>
+                    <button type="button" class="secondary-button" id="ai-prompt-clear">Limpiar</button>
                 </div>
 
                 <div id="ai-prompt-feedback" class="feedback hidden"></div>
@@ -92,7 +92,7 @@
                 <div class="panel-header">
                     <div>
                         <p class="section-kicker">Prompts</p>
-                        <h3 class="panel-title">Biblioteca salva</h3>
+                        <h3 class="panel-title">Biblioteca guardada</h3>
                     </div>
                     <span class="panel-meta" id="ai-prompt-count">{{ ai_prompts.prompts|length }} prompt(s)</span>
                 </div>
@@ -107,12 +107,12 @@
                             </div>
                             <div class="compact-actions">
                                 <button type="button" class="secondary-button" data-edit-ai-prompt="{{ prompt.id }}">Editar</button>
-                                <button type="button" class="danger-button" data-delete-ai-prompt="{{ prompt.id }}">Excluir</button>
+                                <button type="button" class="danger-button" data-delete-ai-prompt="{{ prompt.id }}">Eliminar</button>
                             </div>
                         </article>
                         {% endfor %}
                     {% else %}
-                        <p class="empty-state">Nenhum prompt cadastrado.</p>
+                        <p class="empty-state">Ningún prompt registrado.</p>
                     {% endif %}
                 </div>
             </div>

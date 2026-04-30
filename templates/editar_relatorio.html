@@ -1,21 +1,21 @@
 {% extends "base.html" %}
 
-{% block title %}Editar Relatório{% endblock %}
+{% block title %}Editar Reporte{% endblock %}
 
 {% block content %}
 <section class="grid gap-8">
     <header class="grid gap-4 border border-line bg-paper p-6 sm:p-8">
         <p class="text-[10px] font-semibold uppercase tracking-[0.28em] text-muted">Templates</p>
-        <h2 class="font-sans text-4xl font-bold tracking-tighterx text-ink sm:text-5xl">Editar Relatório</h2>
-        <p class="max-w-3xl text-sm leading-7 text-muted">Crie modelos de relatório com identidade visual própria, mantendo a interface limpa e o template facilmente reutilizável em qualquer agendamento.</p>
+        <h2 class="font-sans text-4xl font-bold tracking-tighterx text-ink sm:text-5xl">Editar Reporte</h2>
+        <p class="max-w-3xl text-sm leading-7 text-muted">Cree modelos de reporte con identidad visual propia, manteniendo la interfaz limpia y el template fácilmente reutilizable en cualquier programación.</p>
     </header>
 
     <div class="grid gap-px border border-line">
         <section class="grid gap-6 bg-paper p-6 sm:p-8">
             <div class="grid gap-2 border-b border-line pb-6">
-                <p class="text-[10px] font-semibold uppercase tracking-[0.28em] text-muted">Cadastro</p>
-                <h3 class="font-sans text-2xl font-bold tracking-tighterx text-ink">Template de Relatório</h3>
-                <p class="max-w-3xl text-sm leading-7 text-muted">Escolha tipografia, cores, imagem de logo e estrutura editorial. O sumário usa os títulos dos painéis da dashboard.</p>
+                <p class="text-[10px] font-semibold uppercase tracking-[0.28em] text-muted">Registro</p>
+                <h3 class="font-sans text-2xl font-bold tracking-tighterx text-ink">Template de Reporte</h3>
+                <p class="max-w-3xl text-sm leading-7 text-muted">Elija tipografía, colores, imagen de logo y estructura editorial. El sumario usa los títulos de los paneles del dashboard.</p>
             </div>
 
             <form id="reportTemplateForm" class="report-template-form-layout" data-templates='{{ report_templates.templates | tojson }}'>
@@ -24,17 +24,17 @@
                 <div class="report-template-main">
                     <div class="form-grid">
                         <label>
-                            <span>Nome do Template</span>
+                            <span>Nombre del Template</span>
                             <input type="text" id="report-template-name" placeholder="Ex.: Template Executivo" required>
                         </label>
 
                         <label>
-                            <span>Cabeçalho</span>
-                            <input type="text" id="report-template-header" placeholder="Ex.: Monitoramento Corporativo | Time de Observabilidade">
+                            <span>Encabezado</span>
+                            <input type="text" id="report-template-header" placeholder="Ej.: Monitoreo Corporativo | Equipo de Observabilidad">
                         </label>
 
                         <label>
-                            <span>Fonte</span>
+                            <span>Fuente</span>
                             <select id="report-template-font">
                                 <option value="Helvetica">Helvetica</option>
                                 <option value="Times-Roman">Times</option>
@@ -44,57 +44,57 @@
 
                         <label class="toggle-row align-end compact-toggle">
                             <input type="checkbox" id="report-template-summary" checked>
-                            <span>Ativar sumário</span>
+                            <span>Activar sumario</span>
                         </label>
 
                         <label>
-                            <span>Cor primária</span>
+                            <span>Color primario</span>
                             <input type="color" id="report-template-primary" value="#ffffff">
                         </label>
 
                         <label>
-                            <span>Cor secundária</span>
+                            <span>Color secundario</span>
                             <input type="color" id="report-template-secondary" value="#a3a3a3">
                         </label>
 
                         <label>
-                            <span>Tamanho do título</span>
+                            <span>Tamaño del título</span>
                             <input type="number" id="report-template-title-size" min="12" max="40" value="20">
                         </label>
 
                         <label>
-                            <span>Tamanho do texto</span>
+                            <span>Tamaño del texto</span>
                             <input type="number" id="report-template-body-size" min="8" max="24" value="11">
                         </label>
                     </div>
 
                     <div class="inline-actions span-2">
-                        <button type="submit">Salvar Template</button>
-                        <button type="button" class="secondary-button" id="report-template-clear">Limpar formulário</button>
+                        <button type="submit">Guardar Template</button>
+                        <button type="button" class="secondary-button" id="report-template-clear">Limpiar formulario</button>
                     </div>
                 </div>
 
                 <aside class="report-template-sidebar">
                     <div class="report-template-media-card">
                         <div class="grid gap-1">
-                            <strong class="font-sans text-base font-bold tracking-tighterx text-ink">Logo do relatório</strong>
-                            <p class="helper-text">A logo será exibida no canto superior direito de todas as páginas do PDF.</p>
+                            <strong class="font-sans text-base font-bold tracking-tighterx text-ink">Logo del reporte</strong>
+                            <p class="helper-text">El logo será exhibido en la esquina superior derecha de todas las páginas del PDF.</p>
                         </div>
 
                         <div class="report-template-upload-grid">
                             <label>
                                 <span>Logo</span>
                                 <input type="file" id="report-template-logo" accept=".png,.jpg,.jpeg,.webp">
-                                <small class="helper-text">Use uma imagem horizontal com fundo transparente quando possível.</small>
+                                <small class="helper-text">Use una imagen horizontal con fondo transparente cuando sea posible.</small>
                             </label>
                         </div>
                     </div>
 
                     <div class="template-preview-stack">
                         <div class="image-preview-card">
-                            <strong class="font-sans text-base font-bold tracking-tighterx text-ink">Preview da Logo</strong>
+                            <strong class="font-sans text-base font-bold tracking-tighterx text-ink">Vista previa del Logo</strong>
                             <img id="report-template-logo-preview" class="template-image-preview hidden mt-4" alt="Preview da logo">
-                            <p id="report-template-logo-empty" class="empty-state mt-3">Nenhuma logo carregada.</p>
+                            <p id="report-template-logo-empty" class="empty-state mt-3">Ningún logo cargado.</p>
                         </div>
                     </div>
                 </aside>
@@ -106,8 +106,8 @@
         <section class="grid gap-6 bg-paper p-6 sm:p-8">
             <div class="grid gap-2 border-b border-line pb-6">
                 <p class="text-[10px] font-semibold uppercase tracking-[0.28em] text-muted">Biblioteca</p>
-                <h3 class="font-sans text-2xl font-bold tracking-tighterx text-ink">Templates Salvos</h3>
-                <p class="max-w-3xl text-sm leading-7 text-muted">Edite ou remova templates existentes. Os agendamentos podem apontar para qualquer modelo salvo aqui.</p>
+                <h3 class="font-sans text-2xl font-bold tracking-tighterx text-ink">Templates Guardados</h3>
+                <p class="max-w-3xl text-sm leading-7 text-muted">Edite o elimine templates existentes. Las programaciones pueden apuntar a cualquier modelo guardado aquí.</p>
             </div>
 
             <div id="report-template-list" class="template-list" data-templates='{{ report_templates.templates | tojson }}'>
@@ -118,16 +118,16 @@
                             <div class="template-library-copy">
                                 <p class="card-kicker">Template</p>
                                 <strong class="font-sans text-lg font-bold tracking-tighterx">{{ template.nome }}</strong>
-                                <p>{{ template.header_text or 'Sem cabeçalho definido' }}</p>
+                                <p>{{ template.header_text or 'Sin encabezado definido' }}</p>
                             </div>
                             <div class="template-library-actions">
                                 <button type="button" class="table-action-button secondary-button" data-edit-report-template="{{ template.id }}">Editar</button>
-                                <button type="button" class="table-action-button danger-button" data-delete-report-template="{{ template.id }}">Excluir</button>
+                                <button type="button" class="table-action-button danger-button" data-delete-report-template="{{ template.id }}">Eliminar</button>
                             </div>
                         </div>
                         <div class="template-meta-grid">
                             <div class="template-meta-item">
-                                <span class="template-meta-label">Fonte</span>
+                                <span class="template-meta-label">Fuente</span>
                                 <strong>{{ template.font_family }}</strong>
                             </div>
                             <div class="template-meta-item">
@@ -139,14 +139,14 @@
                                 <strong>{{ template.body_font_size }}px</strong>
                             </div>
                             <div class="template-meta-item">
-                                <span class="template-meta-label">Estrutura</span>
-                                <strong>{% if template.show_summary %}Com sumário{% else %}Sem sumário{% endif %}</strong>
+                                <span class="template-meta-label">Estructura</span>
+                                <strong>{% if template.show_summary %}Con sumario{% else %}Sin sumario{% endif %}</strong>
                             </div>
                         </div>
                     </article>
                     {% endfor %}
                 {% else %}
-                    <p class="empty-state">Nenhum template cadastrado.</p>
+                    <p class="empty-state">Ningún template registrado.</p>
                 {% endif %}
             </div>
         </section>

@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
-{% block title %}Configurações{% endblock %}
+{% block title %}Configuraciones{% endblock %}
 
 {% block content %}
 <section class="page-stack">
     <header class="page-header-card">
-        <p class="hero-kicker">Configurações</p>
-        <h2 class="hero-title">Central de infraestrutura, identidade visual e integrações.</h2>
+        <p class="hero-kicker">Configuraciones</p>
+        <h2 class="hero-title">Central de infraestructura, identidad visual e integraciones.</h2>
         <p class="hero-copy">
-            Reunimos aqui os módulos que sustentam a operação: canais de envio, provedores de IA, servidores Grafana e templates de relatório. Cada área aprofunda um aspecto específico do sistema.
+            Aquí reunimos los módulos que sustentan la operación: canales de envío, proveedores de IA, servidores Grafana y templates de reporte. Cada área profundiza un aspecto específico del sistema.
         </p>
     </header>
 
@@ -16,7 +16,7 @@
         <a href="{{ url_for('delivery_settings_page') }}" class="soft-card transition hover:-translate-y-0.5">
             <div class="grid gap-3">
                 <p class="hero-kicker">Entrega</p>
-                <h3 class="section-title text-[1.7rem]">Aplicações de envio</h3>
+                <h3 class="section-title text-[1.7rem]">Aplicaciones de envío</h3>
                 <p class="soft-copy text-sm leading-7">
                     {{ telegram_config.bot_count }} bot(s), {{ telegram_config.chat_count }} chat(s) e SMTP {% if email_config.password_configured %}configurado{% else %}pendente{% endif %}.
                 </p>
@@ -26,27 +26,27 @@
         <a href="{{ url_for('ai_settings_page') }}" class="soft-card transition hover:-translate-y-0.5">
             <div class="grid gap-3">
                 <p class="hero-kicker">IA</p>
-                <h3 class="section-title text-[1.7rem]">IA e Prompts</h3>
+                <h3 class="section-title text-[1.7rem]">IA y Prompts</h3>
                 <p class="soft-copy text-sm leading-7">
-                    Provedor atual: {{ ai_config.provider|default('openai') }}. Chave {% if ai_config.api_key_configured %}configurada{% else %}pendente{% endif %} e {{ ai_prompts.prompts|length }} prompt(s) reutilizáveis.
+                    Proveedor actual: {{ ai_config.provider|default('openai') }}. Clave {% if ai_config.api_key_configured %}configurada{% else %}pendente{% endif %} e {{ ai_prompts.prompts|length }} prompt(s) reutilizáveis.
                 </p>
             </div>
         </a>
 
         <a href="{{ url_for('grafana_servers_page') }}" class="soft-card transition hover:-translate-y-0.5">
             <div class="grid gap-3">
-                <p class="hero-kicker">Origem</p>
+                <p class="hero-kicker">Origen</p>
                 <h3 class="section-title text-[1.7rem]">Servidores Grafana</h3>
                 <p class="soft-copy text-sm leading-7">
-                    {{ grafana_servers|length }} servidor(es) cadastrados para catálogo, autenticação e captura dos relatórios.
+                    {{ grafana_servers|length }} servidor(es) registrados para catálogo, autenticación y captura de reportes.
                 </p>
             </div>
         </a>
 
         <a href="{{ url_for('report_templates_page') }}" class="soft-card transition hover:-translate-y-0.5">
             <div class="grid gap-3">
-                <p class="hero-kicker">Design</p>
-                <h3 class="section-title text-[1.7rem]">Editar relatório</h3>
+                <p class="hero-kicker">Diseño</p>
+                <h3 class="section-title text-[1.7rem]">Editar reporte</h3>
                 <p class="soft-copy text-sm leading-7">
                     {{ report_templates.templates|length }} template(s) com logo, tipografia e identidade visual do PDF.
                 </p>
@@ -55,10 +55,10 @@
 
         <a href="{{ url_for('execution_settings_page') }}" class="soft-card transition hover:-translate-y-0.5">
             <div class="grid gap-3">
-                <p class="hero-kicker">Execução</p>
-                <h3 class="section-title text-[1.7rem]">Configuração de workers</h3>
+                <p class="hero-kicker">Ejecución</p>
+                <h3 class="section-title text-[1.7rem]">Configuración de workers</h3>
                 <p class="soft-copy text-sm leading-7">
-                    Limite atual: {{ execution_config.max_concurrent_reports }} worker(s) simultâneo(s) para geração de relatórios.
+                    Límite actual: {{ execution_config.max_concurrent_reports }} worker(s) simultáneo(s) para la generación de reportes.
                 </p>
             </div>
         </a>

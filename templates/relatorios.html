@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 
-{% block title %}Relatórios{% endblock %}
-{% block topbar_title %}Status dos Relatórios{% endblock %}
+{% block title %}Reportes{% endblock %}
+{% block topbar_title %}Estado de los Reportes{% endblock %}
 
 {% block content %}
 <section class="page-stack">
     <header class="page-header-card">
         <div class="section-heading">
-            <p class="section-kicker">Status dos Relatórios</p>
-            <h2 class="section-title">Tabela operacional de entregas concluídas.</h2>
-            <p class="section-copy">Use os intervalos fixos de 24h, 7d e 30d para acompanhar volume, PDFs gerados e distribuição por canal.</p>
+            <p class="section-kicker">Estado de los Reportes</p>
+            <h2 class="section-title">Tabla operativa de entregas completadas.</h2>
+            <p class="section-copy">Use los intervalos fijos de 24h, 7d y 30d para seguir volumen, PDFs generados y distribución por canal.</p>
         </div>
 
         <form method="get" class="filter-bar">
@@ -22,8 +22,8 @@
     <section class="grafana-card table-panel">
         <div class="panel-header">
             <div>
-                <p class="section-kicker">Tabela</p>
-                <h3 class="panel-title">Execuções enviadas</h3>
+                <p class="section-kicker">Tabla</p>
+                <h3 class="panel-title">Ejecuciones enviadas</h3>
             </div>
             <span class="panel-meta">{{ status_data.report_rows|length }} registro(s)</span>
         </div>
@@ -32,9 +32,9 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Quando</th>
-                        <th>Agendamento</th>
-                        <th>Status</th>
+                        <th>Cuándo</th>
+                        <th>Programación</th>
+                        <th>Estado</th>
                         <th>PDFs</th>
                         <th>E-mail</th>
                         <th>Telegram</th>
@@ -52,7 +52,7 @@
                     </tr>
                     {% else %}
                     <tr>
-                        <td colspan="6">Nenhum relatório enviado neste intervalo.</td>
+                        <td colspan="6">Ningún reporte enviado en este intervalo.</td>
                     </tr>
                     {% endfor %}
                 </tbody>

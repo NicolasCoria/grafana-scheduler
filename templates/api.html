@@ -9,8 +9,8 @@
     <header class="page-header-card">
         <div class="section-heading">
             <p class="section-kicker">API pública</p>
-            <h2 class="section-title">Tokens e endpoints</h2>
-            <p class="section-copy">A API entrega métricas operacionais, status dos relatórios e disparo imediato por ID.</p>
+            <h2 class="section-title">Tokens y endpoints</h2>
+            <p class="section-copy">La API entrega métricas operativas, estado de los reportes y disparo inmediato por ID.</p>
         </div>
 
         <div class="api-summary-list">
@@ -18,7 +18,7 @@
                 <span class="api-endpoint-method">GET</span>
                 <div>
                     <strong>/api/v1/metrics</strong>
-                    <p>Métricas operacionais para 24h, 7 dias e 30 dias.</p>
+                    <p>Métricas operativas para 24h, 7 días y 30 días.</p>
                 </div>
             </article>
 
@@ -26,7 +26,7 @@
                 <span class="api-endpoint-method">GET</span>
                 <div>
                     <strong>/api/v1/relatorios/status</strong>
-                    <p>Status dos relatórios no intervalo selecionado.</p>
+                    <p>Estado de los reportes en el intervalo seleccionado.</p>
                 </div>
             </article>
 
@@ -34,34 +34,34 @@
                 <span class="api-endpoint-method post">POST</span>
                 <div>
                     <strong>/api/v1/agendamentos/&lt;id&gt;/enviar</strong>
-                    <p>Enfileira o envio imediato de um relatório.</p>
+                    <p>Encola el envío inmediato de un reporte.</p>
                 </div>
             </article>
         </div>
 
         <div class="api-token-note">
-            Salve o token gerado. Ele aparece uma única vez.
+            Guarde el token generado. Solo aparece una vez.
         </div>
     </header>
 
     <section class="grafana-card detail-panel">
         <div class="panel-header">
             <div>
-                <p class="section-kicker">Autenticação</p>
-                <h3 class="panel-title">Gerar novo token</h3>
+                <p class="section-kicker">Autenticación</p>
+                <h3 class="panel-title">Generar nuevo token</h3>
             </div>
             <span class="panel-meta">{{ api_access_config.tokens|length }} token(s)</span>
         </div>
 
         <form id="apiTokenForm" class="api-token-form">
             <label>
-                <span>Nome do token</span>
-                <input type="text" name="nome" placeholder="Ex.: Integração BI, Monitoramento NOC">
+                <span>Nombre del token</span>
+                <input type="text" name="nome" placeholder="Ej.: Integración BI, Monitoreo NOC">
             </label>
-            <button type="submit" class="api-generate-button">Gerar token</button>
+            <button type="submit" class="api-generate-button">Generar token</button>
         </form>
 
-        <p class="helper-text">Use um nome que identifique a integração que vai consumir a API.</p>
+        <p class="helper-text">Use un nombre que identifique la integración que va a consumir la API.</p>
 
         <div id="api-token-feedback" class="feedback hidden"></div>
         <div id="api-token-created" class="token-created hidden"></div>
@@ -71,7 +71,7 @@
         <div class="panel-header">
             <div>
                 <p class="section-kicker">Biblioteca</p>
-                <h3 class="panel-title">Tokens salvos</h3>
+                <h3 class="panel-title">Tokens guardados</h3>
             </div>
             <span class="panel-meta">{{ api_access_config.tokens|length }} token(s)</span>
         </div>
@@ -81,12 +81,12 @@
             <article class="token-item" data-api-token-id="{{ token.id }}">
                 <div>
                     <strong>{{ token.nome }}</strong>
-                    <span>Criado em {{ token.created_at }}</span>
+                    <span>Creado en {{ token.created_at }}</span>
                 </div>
-                <button type="button" class="danger-button" data-delete-api-token="{{ token.id }}">Remover</button>
+                <button type="button" class="danger-button" data-delete-api-token="{{ token.id }}">Eliminar</button>
             </article>
             {% else %}
-            <p class="empty-state">Nenhum token salvo.</p>
+            <p class="empty-state">Ningún token guardado.</p>
             {% endfor %}
         </div>
     </section>

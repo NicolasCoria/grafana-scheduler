@@ -1,45 +1,45 @@
 {% extends "base.html" %}
 
-{% block title %}Erro{% endblock %}
-{% block topbar_title %}Detalhe do Erro{% endblock %}
+{% block title %}Error{% endblock %}
+{% block topbar_title %}Detalle del Error{% endblock %}
 
 {% block content %}
 <section class="page-stack">
     <header class="page-header-card">
         <div class="section-heading">
-            <p class="section-kicker">Falha Expandida</p>
+            <p class="section-kicker">Fallo Expandido</p>
             <h2 class="section-title">{{ execution.schedule_title }}</h2>
             <p class="section-copy">{{ execution.created_at }}</p>
         </div>
-        <a href="{{ url_for('failures_page') }}" class="table-action">Voltar</a>
+        <a href="{{ url_for('failures_page') }}" class="table-action">Volver</a>
     </header>
 
     <section class="grafana-card detail-panel">
         <div class="panel-header">
             <div>
-                <p class="section-kicker">Erro</p>
-                <h3 class="panel-title">Mensagem e detalhe</h3>
+                <p class="section-kicker">Error</p>
+                <h3 class="panel-title">Mensaje y detalle</h3>
             </div>
         </div>
-        <pre class="error-log">{{ execution.error_details or execution.error_message or 'Sem detalhe registrado.' }}</pre>
+        <pre class="error-log">{{ execution.error_details or execution.error_message or 'Sin detalle registrado.' }}</pre>
     </section>
 
     <section class="grafana-card detail-panel">
         <div class="panel-header">
             <div>
-                <p class="section-kicker">Imagem</p>
-                <h3 class="panel-title">Captura do problema</h3>
+                <p class="section-kicker">Imagen</p>
+                <h3 class="panel-title">Captura del problema</h3>
             </div>
         </div>
         {% if execution.error_image_base64 %}
         <img
             class="failure-preview"
             src="data:image/png;base64,{{ execution.error_image_base64 }}"
-            alt="Falha capturada"
+            alt="Fallo capturada"
             onerror="this.onerror=null;this.src='data:image/svg+xml;base64,{{ execution.error_image_base64 }}';"
         >
         {% else %}
-        <p class="empty-state">Nenhuma imagem armazenada para esta falha.</p>
+        <p class="empty-state">Ninguna imagen almacenada para este fallo.</p>
         {% endif %}
     </section>
 </section>

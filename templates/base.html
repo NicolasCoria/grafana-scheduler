@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,29 +34,29 @@
 
             <nav class="app-nav">
                 <div class="nav-group">
-                    <p class="nav-group-title">Administração</p>
+                    <p class="nav-group-title">Administración</p>
                     <a href="{{ url_for('dashboard_page') }}" class="nav-link {% if request.endpoint == 'dashboard_page' %}active{% endif %}">Dashboard</a>
-                    <a href="{{ url_for('reports_page') }}" class="nav-link {% if request.endpoint == 'reports_page' %}active{% endif %}">Relatórios</a>
-                    <a href="{{ url_for('failures_page') }}" class="nav-link {% if request.endpoint in ['failures_page', 'failure_detail_page'] %}active{% endif %}">LOG de Erros</a>
+                    <a href="{{ url_for('reports_page') }}" class="nav-link {% if request.endpoint == 'reports_page' %}active{% endif %}">Reportes</a>
+                    <a href="{{ url_for('failures_page') }}" class="nav-link {% if request.endpoint in ['failures_page', 'failure_detail_page'] %}active{% endif %}">LOG de Errores</a>
                     <a href="{{ url_for('api_page') }}" class="nav-link {% if request.endpoint == 'api_page' %}active{% endif %}">API</a>
                 </div>
 
                 <div class="nav-group">
-                    <p class="nav-group-title">Operação</p>
-                    <a href="{{ url_for('schedule_page') }}" class="nav-link {% if request.endpoint == 'schedule_page' %}active{% endif %}">Agendamentos</a>
-                    <a href="{{ url_for('configuration_hub_page') }}" class="nav-link {% if request.endpoint in ['configuration_hub_page', 'delivery_settings_page', 'ai_settings_page', 'grafana_servers_page', 'report_templates_page', 'execution_settings_page'] %}active{% endif %}">Configurações</a>
+                    <p class="nav-group-title">Operación</p>
+                    <a href="{{ url_for('schedule_page') }}" class="nav-link {% if request.endpoint == 'schedule_page' %}active{% endif %}">Programaciones</a>
+                    <a href="{{ url_for('configuration_hub_page') }}" class="nav-link {% if request.endpoint in ['configuration_hub_page', 'delivery_settings_page', 'ai_settings_page', 'grafana_servers_page', 'report_templates_page', 'execution_settings_page'] %}active{% endif %}">Configuraciones</a>
                 </div>
             </nav>
 
             <div class="sidebar-note">
-                <span>Retenção operacional de 30 dias para métricas e falhas.</span>
+                <span>Retención operativa de 30 días para métricas y fallos.</span>
             </div>
         </aside>
 
         <div class="app-main">
             <header class="app-topbar">
                 <div class="app-topbar-copy">
-                    <span class="app-topbar-kicker">{% block topbar_kicker %}Observabilidade{% endblock %}</span>
+                    <span class="app-topbar-kicker">{% block topbar_kicker %}Observabilidad{% endblock %}</span>
                     <h1>{% block topbar_title %}Grafana Scheduler{% endblock %}</h1>
                 </div>
 
@@ -65,7 +65,7 @@
                     <span class="theme-pill">{{ current_user }}</span>
                     <form method="post" action="{{ url_for('logout_route') }}" class="logout-form">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-                        <button type="submit" class="secondary-button">Sair</button>
+                        <button type="submit" class="secondary-button">Salir</button>
                     </form>
                     {% else %}
                     <div class="theme-pill">Dark Mode</div>

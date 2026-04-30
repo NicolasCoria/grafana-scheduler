@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 
-{% block title %}LOG de Erros{% endblock %}
-{% block topbar_title %}LOG de Erros{% endblock %}
+{% block title %}LOG de Errores{% endblock %}
+{% block topbar_title %}LOG de Errores{% endblock %}
 
 {% block content %}
 <section class="page-stack">
     <header class="page-header-card">
         <div class="section-heading">
-            <p class="section-kicker">Falhas Operacionais</p>
-            <h2 class="section-title">Ocorrências registradas com acesso ao detalhe visual do erro.</h2>
-            <p class="section-copy">Cada linha representa uma falha do scheduler. Ao expandir, a tela mostra apenas o erro e a imagem correspondente.</p>
+            <p class="section-kicker">Fallos Operativos</p>
+            <h2 class="section-title">Ocurrencias registradas con acceso al detalle visual del error.</h2>
+            <p class="section-copy">Cada línea representa un fallo del scheduler. Al expandir, la pantalla muestra solo el error y la imagen correspondiente.</p>
         </div>
 
         <form method="get" class="filter-bar">
@@ -23,18 +23,18 @@
         <div class="panel-header">
             <div>
                 <p class="section-kicker">Incidentes</p>
-                <h3 class="panel-title">Falhas recentes</h3>
+                <h3 class="panel-title">Fallos recientes</h3>
             </div>
-            <span class="panel-meta">{{ status_data.failure_rows|length }} ocorrência(s)</span>
+            <span class="panel-meta">{{ status_data.failure_rows|length }} ocurrencia(s)</span>
         </div>
 
         <div class="table-wrap">
             <table>
                 <thead>
                     <tr>
-                        <th>Quando</th>
-                        <th>Agendamento</th>
-                        <th>Erro</th>
+                        <th>Cuándo</th>
+                        <th>Programación</th>
+                        <th>Error</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -48,7 +48,7 @@
                     </tr>
                     {% else %}
                     <tr>
-                        <td colspan="4">Nenhuma falha registrada neste intervalo.</td>
+                        <td colspan="4">Ningún fallo registrado en este intervalo.</td>
                     </tr>
                     {% endfor %}
                 </tbody>

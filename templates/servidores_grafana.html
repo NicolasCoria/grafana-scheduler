@@ -8,50 +8,50 @@
         <div class="section-heading">
             <p class="section-kicker">Grafana</p>
             <h2 class="section-title">Servidores Grafana</h2>
-            <p class="section-copy">Cadastre as origens usadas no catálogo de dashboards e na geração dos relatórios.</p>
+            <p class="section-copy">Registre los orígenes usados en el catálogo de dashboards y en la generación de los reportes.</p>
         </div>
     </header>
 
     <div class="server-settings-layout">
         <section class="section-panel">
             <div class="section-heading">
-                <p class="section-kicker">Cadastro</p>
-                <h3 id="grafana-server-form-title" class="section-title">Nova origem Grafana</h3>
-                <p id="grafana-server-form-copy" class="section-copy">Informe os dados da origem que será usada no wizard e no scheduler.</p>
+                <p class="section-kicker">Registro</p>
+                <h3 id="grafana-server-form-title" class="section-title">Nuevo origen Grafana</h3>
+                <p id="grafana-server-form-copy" class="section-copy">Informe los datos del origen que será usado en el wizard y en el scheduler.</p>
             </div>
 
             <form id="grafanaServerForm" class="server-form-stack top-gap">
                 <input type="hidden" name="server_id" id="grafana-server-id">
 
                 <label>
-                    <span>Nome do servidor</span>
+                    <span>Nombre del servidor</span>
                     <input type="text" name="nome" required>
                 </label>
 
                 <label>
-                    <span>URL do Grafana</span>
+                    <span>URL de Grafana</span>
                     <input type="url" name="base_url" required placeholder="https://grafana.seudominio.com">
                 </label>
 
                 <label>
-                    <span>Usuário</span>
+                    <span>Usuario</span>
                     <input type="text" name="username" required>
                 </label>
 
                 <label>
-                    <span>Senha</span>
+                    <span>Contraseña</span>
                     <input type="password" name="password">
                 </label>
-                <p class="helper-text">A senha é obrigatória para a captura dos relatórios. Ao editar, deixe em branco para manter a atual.</p>
+                <p class="helper-text">La contraseña es obligatoria para la captura de los reportes. Al editar, deje en blanco para mantener la actual.</p>
 
                 <label>
-                    <span>Token da conta de serviço</span>
+                    <span>Token de la cuenta de servicio</span>
                     <input type="password" name="service_account_token">
                 </label>
-                <p class="helper-text">Opcional. Ao editar, deixe em branco para manter o token atual.</p>
+                <p class="helper-text">Opcional. Al editar, deje en blanco para mantener el token actual.</p>
 
                 <div class="inline-actions server-form-actions">
-                    <button type="submit" id="grafana-server-submit">Salvar servidor</button>
+                    <button type="submit" id="grafana-server-submit">Guardar servidor</button>
                     <button type="button" class="secondary-button hidden" id="grafana-server-cancel">Cancelar</button>
                 </div>
             </form>
@@ -61,9 +61,9 @@
 
         <section class="section-panel">
             <div class="section-heading">
-                <p class="section-kicker">Inventário</p>
-                <h3 class="section-title">Servidores salvos</h3>
-                <p class="section-copy">Revise rapidamente as origens disponíveis.</p>
+                <p class="section-kicker">Inventario</p>
+                <h3 class="section-title">Servidores guardados</h3>
+                <p class="section-copy">Revise rápidamente los orígenes disponibles.</p>
             </div>
 
             <div class="server-list top-gap">
@@ -84,11 +84,11 @@
                                 "username": server.username
                             } | tojson | forceescape }}'
                         >Editar</button>
-                        <button type="button" class="danger-button" data-delete-server="{{ server.id }}">Excluir</button>
+                        <button type="button" class="danger-button" data-delete-server="{{ server.id }}">Eliminar</button>
                     </div>
                 </article>
                 {% else %}
-                <p class="empty-state">Nenhum servidor Grafana cadastrado.</p>
+                <p class="empty-state">Ningún servidor Grafana registrado.</p>
                 {% endfor %}
             </div>
         </section>

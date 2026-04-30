@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}Aplicacoes de Envio{% endblock %}
+{% block title %}Aplicaciones de Envío{% endblock %}
 
 {% block content %}
 <section class="grid gap-8">
     <header class="grid gap-4 border border-line bg-paper p-6 sm:p-8">
-        <p class="text-[10px] font-semibold uppercase tracking-[0.28em] text-muted">Tela 2</p>
-        <h2 class="font-sans text-4xl font-bold tracking-tighterx text-ink sm:text-5xl">Aplicacoes de Envio</h2>
-        <p class="max-w-3xl text-sm leading-7 text-muted">Configure os canais operacionais de entrega. O SMTP e os bots do Telegram ficam no backend e nunca retornam em texto puro para o navegador.</p>
+        <p class="text-[10px] font-semibold uppercase tracking-[0.28em] text-muted">Pantalla 2</p>
+        <h2 class="font-sans text-4xl font-bold tracking-tighterx text-ink sm:text-5xl">Aplicaciones de Envío</h2>
+        <p class="max-w-3xl text-sm leading-7 text-muted">Configure los canales operativos de entrega. El SMTP y los bots de Telegram quedan en el backend y nunca retornan en texto puro para el navegador.</p>
     </header>
 
     <div class="grid gap-px border border-line xl:grid-cols-2">
@@ -18,7 +18,7 @@
                     <h3 class="font-sans text-2xl font-bold tracking-tighterx text-ink">E-mail</h3>
                 </div>
                 <span class="status-badge {% if email_config.password_configured %}ready{% else %}warning{% endif %}">
-                    {% if email_config.password_configured %}Configurado{% else %}Pendente{% endif %}
+                    {% if email_config.password_configured %}Configurado{% else %}Pendiente{% endif %}
                 </span>
             </div>
 
@@ -28,7 +28,7 @@
                     <input type="text" name="smtp_server" value="{{ email_config.smtp_server }}" required>
                 </label>
                 <label>
-                    <span>Porta</span>
+                    <span>Puerto</span>
                     <input type="number" name="smtp_port" value="{{ email_config.smtp_port }}" required>
                 </label>
                 <label>
@@ -36,11 +36,11 @@
                     <input type="text" name="smtp_username" value="{{ email_config.smtp_username }}" required>
                 </label>
                 <label>
-                    <span>Senha SMTP</span>
-                    <input type="password" name="smtp_password" placeholder="{% if email_config.password_configured %}Ja configurada. Preencha apenas para trocar.{% else %}Informe a senha{% endif %}">
+                    <span>Contraseña SMTP</span>
+                    <input type="password" name="smtp_password" placeholder="{% if email_config.password_configured %}Ya configurada. Llene solo para cambiar.{% else %}Informe la contraseña{% endif %}">
                 </label>
                 <label class="span-2">
-                    <span>Remetente</span>
+                    <span>Remitente</span>
                     <input type="email" name="smtp_from_email" value="{{ email_config.smtp_from_email }}" required>
                 </label>
                 <label class="toggle-row span-2">
@@ -50,7 +50,7 @@
             </div>
 
             <div class="inline-actions">
-                <button type="submit">Salvar Configuracao de E-mail</button>
+                <button type="submit">Guardar Configuración de E-mail</button>
             </div>
             <div id="email-config-feedback" class="feedback hidden"></div>
         </form>
@@ -62,24 +62,24 @@
                     <h3 class="font-sans text-2xl font-bold tracking-tighterx text-ink">Telegram</h3>
                 </div>
                 <span class="status-badge {% if telegram_config.bot_count %}ready{% else %}warning{% endif %}">
-                    {% if telegram_config.bot_count %}{{ telegram_config.bot_count }} bot(s) / {{ telegram_config.chat_count }} chat(s){% else %}Nenhum bot salvo{% endif %}
+                    {% if telegram_config.bot_count %}{{ telegram_config.bot_count }} bot(s) / {{ telegram_config.chat_count }} chat(s){% else %}Ningún bot guardado{% endif %}
                 </span>
             </div>
 
             <form id="telegramSearchForm" class="grid gap-4">
                 <label>
-                    <span>Nome do Bot</span>
+                    <span>Nombre del Bot</span>
                     <input type="text" id="telegram-bot-name" required placeholder="Ex.: Alertas SOC">
-                    <small class="helper-text">Esse nome ajuda a separar ambientes, times ou clientes.</small>
+                    <small class="helper-text">Este nombre ayuda a separar ambientes, equipos o clientes.</small>
                 </label>
                 <label>
                     <span>Bot Token</span>
-                    <input type="password" id="telegram-bot-token" placeholder="Cole o token do bot">
-                    <small class="helper-text">Ao editar um bot existente, preencha o token apenas se quiser trocá-lo.</small>
+                    <input type="password" id="telegram-bot-token" placeholder="Pegue el token del bot">
+                    <small class="helper-text">Al editar un bot existente, llene el token solo si quiere cambiarlo.</small>
                 </label>
                 <div class="inline-actions">
                     <button type="button" id="fetch-telegram-chats">Buscar Chats</button>
-                    <button type="button" class="secondary-button" id="clear-telegram-form">Novo Bot</button>
+                    <button type="button" class="secondary-button" id="clear-telegram-form">Nuevo Bot</button>
                 </div>
             </form>
 
@@ -87,20 +87,20 @@
 
             <div class="grid gap-4 border border-line bg-paper p-5">
                 <div class="grid gap-1">
-                    <p class="text-[10px] font-semibold uppercase tracking-[0.28em] text-muted">Descoberta</p>
-                    <h4 class="font-sans text-lg font-bold tracking-tighterx text-ink">Chats Disponiveis</h4>
+                    <p class="text-[10px] font-semibold uppercase tracking-[0.28em] text-muted">Descubrimiento</p>
+                    <h4 class="font-sans text-lg font-bold tracking-tighterx text-ink">Chats Disponibles</h4>
                 </div>
                 <div id="telegram-chat-list" class="chat-list"></div>
                 <div id="telegram-empty-state" class="{% if telegram_config.bots %}hidden{% endif %}">
-                    <p class="empty-state">Nenhum chat carregado ainda. Informe o token e clique em "Buscar Chats".</p>
+                    <p class="empty-state">Ningún chat cargado aún. Informe el token y haga clic en "Buscar Chats".</p>
                 </div>
-                <button type="button" id="save-telegram-config">Salvar Configuracao do Telegram</button>
+                <button type="button" id="save-telegram-config">Guardar Configuración de Telegram</button>
             </div>
 
             <div class="grid gap-4 border border-line bg-paper p-5">
                 <div class="grid gap-1">
                     <p class="text-[10px] font-semibold uppercase tracking-[0.28em] text-muted">Biblioteca</p>
-                    <h4 class="font-sans text-lg font-bold tracking-tighterx text-ink">Bots Salvos</h4>
+                    <h4 class="font-sans text-lg font-bold tracking-tighterx text-ink">Bots Guardados</h4>
                 </div>
                 <div id="telegram-bot-list" class="chat-list" data-saved-bots='{{ telegram_config.bots | tojson }}'>
                     {% for bot in telegram_config.bots %}
@@ -111,11 +111,11 @@
                         </div>
                         <div class="inline-actions">
                             <button type="button" class="secondary-button" data-load-telegram-bot="{{ bot.id }}">Editar</button>
-                            <button type="button" class="danger-button" data-delete-telegram-bot="{{ bot.id }}">Excluir</button>
+                            <button type="button" class="danger-button" data-delete-telegram-bot="{{ bot.id }}">Eliminar</button>
                         </div>
                     </div>
                     {% else %}
-                    <p class="empty-state">Nenhum bot Telegram salvo.</p>
+                    <p class="empty-state">Ningún bot Telegram guardado.</p>
                     {% endfor %}
                 </div>
             </div>
