@@ -1497,18 +1497,8 @@ def send_email(recipients, subject, body_text, attachment_paths):
 
     try:
         _send_via_smtp(smtp_settings["use_tls"])
-    except smtplib.SMTPNotSupportedError as exc:
-        should_retry_tls = (
-            smtp_settings["port"] != 465
-            and not smtp_settings["use_tls"]
-            and "auth" in str(exc).lower()
-        )
-        if not should_retry_tls:
-            raise
-        log_message(
-            "SMTP AUTH indisponivel sem criptografia; tentando novamente com STARTTLS automatico."
-        )
-        _send_via_smtp(True)
+    except smtplib.SMTPNotSupportedError:
+        raise
 
     log_message(f"Envio por e-mail concluido para {len(recipients)} destinatario(s).")
     return len(recipients)
