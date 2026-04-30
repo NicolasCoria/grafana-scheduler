@@ -41,14 +41,14 @@ from paths import data_path
 
 LOG_FILE = data_path("dashboard_capture.log")
 DEFAULT_AI_PROMPT = (
-    "Analise a imagem e os metadados com foco operacional. Destaque anomalias, tendencias, riscos, capacidade, "
-    "disponibilidade e qualquer leitura pratica que ajude na tomada de decisao."
+    "Analiza la imagen y los metadatos con foco operacional. Destaca anomalías, tendencias, riesgos, capacidad, "
+    "disponibilidad y cualquier lectura práctica que ayude en la toma de decisiones."
 )
 IGNORED_PANEL_TYPES = {"text"}
 COMPACT_PANEL_TYPES = {"stat", "gauge", "bargauge", "piechart"}
 PANEL_TITLE_FALLBACK_PROMPT = (
-    "Com base exclusivamente na imagem do painel e nos metadados recebidos, gere um titulo curto, objetivo e tecnico "
-    "para este painel. Responda apenas com o titulo final, sem aspas e sem texto adicional."
+    "Basándote exclusivamente en la imagen del panel y en los metadatos recibidos, genera un título corto, objetivo y técnico "
+    "para este panel. Responde únicamente con el título final, sin comillas y sin texto adicional."
 )
 
 
@@ -66,7 +66,7 @@ def log_message(message):
 
 
 def build_failure_image_base64(title, lines):
-    safe_title = html.escape(title or "Falha de Execucao")
+    safe_title = html.escape(title or "Fallo de Ejecución")
     safe_lines = "".join(
         f'<tspan x="24" dy="22">{html.escape(str(line))[:140]}</tspan>'
         for line in lines[:10]
@@ -93,7 +93,7 @@ def ensure_kiosk(url):
 def get_grafana_runtime_settings(schedule):
     server = get_grafana_server(schedule.get("grafana_server_id"))
     if not server:
-        raise ReportExecutionError("Servidor Grafana nao encontrado para o agendamento.")
+        raise ReportExecutionError("Servidor Grafana no encontrado para el agendamiento.")
     return {
         "base_url": server["base_url"].rstrip("/"),
         "username": server["username"],
@@ -142,7 +142,7 @@ def grafana_api_get(runtime_settings, path, params=None, timeout=30):
         )
 
     if not attempts:
-        raise ReportExecutionError("Nenhuma credencial valida foi configurada para consultar a API do Grafana.")
+        raise ReportExecutionError("Ninguna credencial válida fue configurada para consultar la API de Grafana.")
 
     for attempt in attempts:
         try:
@@ -158,7 +158,7 @@ def grafana_api_get(runtime_settings, path, params=None, timeout=30):
         except requests.RequestException as exc:
             errors.append(f"{attempt['label']}: {exc}")
 
-    raise ReportExecutionError("Falha ao consultar a API do Grafana.", details="; ".join(errors))
+    raise ReportExecutionError("Fallo al consultar la API de Grafana.", details="; ".join(errors))
 
 
 def get_schedule_template(schedule):
@@ -346,7 +346,7 @@ def build_page_chrome(template, schedule, styles):
 
         canvas.setFont(font_family, small_size)
         canvas.setFillColor(muted_color)
-        canvas.drawRightString(page_width - doc.rightMargin - logo_reserved_width, header_y, f"Pagina {canvas.getPageNumber()}")
+        canvas.drawRightString(page_width - doc.rightMargin - logo_reserved_width, header_y, f"Página {canvas.getPageNumber()}")
 
         if footer_text:
             canvas.drawCentredString(page_width / 2, footer_y, truncate_text(footer_text, 140))
@@ -375,7 +375,7 @@ def build_summary_appendix_pdf(report, template, output_path):
 
     styles = build_template_styles(template)
     doc = SimpleDocTemplate(output_path, pagesize=A4, leftMargin=42, rightMargin=42, topMargin=48, bottomMargin=42)
-    story = [Paragraph("Analise", styles["heading"])]
+    story = [Paragraph("Análisis", styles["heading"])]
     append_markdown_blocks(story, analysis_text, styles)
     page_chrome = build_page_chrome(template, {"report_footer": ""}, styles)
     doc.build(story, onFirstPage=page_chrome, onLaterPages=page_chrome)
@@ -721,8 +721,8 @@ async def build_dashboard_reports(schedule):
                 ai_analysis = generate_visual_analysis(
                     schedule=schedule,
                     task_instruction=(
-                        "Analise esta dashboard como uma visao consolidada. Resuma o comportamento geral do ambiente, "
-                        "sinais de alerta, tendencias, consistencia operacional e qualquer pista relevante percebida na imagem."
+                        "Analiza este dashboard como una visión consolidada. Resume el comportamiento general del entorno, "
+                        "señales de alerta, tendencias, consistencia operacional y cualquier indicio relevante percibido en la imagen."
                     ),
                     metadata_text="",
                     image_bytes=assets["screenshot_bytes"],
@@ -753,10 +753,10 @@ async def build_dashboard_reports(schedule):
                 image_base64 = ""
         if not image_base64:
             image_base64 = build_failure_image_base64(
-                "Falha ao gerar relatorio",
+                "Fallo al generar reporte",
                 [schedule.get("titulo", ""), str(exc)],
             )
-        raise ReportExecutionError("Falha ao gerar relatorios.", details=str(exc), image_base64=image_base64) from exc
+        raise ReportExecutionError("Fallo al generar reportes.", details=str(exc), image_base64=image_base64) from exc
     finally:
         if browser is not None:
             await browser.close()
@@ -791,7 +791,7 @@ def flatten_dashboard_panels(panels):
         flattened.append(
             {
                 "id": panel_id,
-                "title": title_raw or f"Painel {panel_id}",
+                "title": title_raw or f"Panel {panel_id}",
                 "title_raw": title_raw,
                 "title_missing": not bool(title_raw),
                 "description": description.strip(),
@@ -828,26 +828,26 @@ def fetch_dashboard_metadata(runtime_settings, dashboard):
 
 def build_dashboard_metadata_text(dashboard_meta):
     lines = [
-        f"Dashboard: {dashboard_meta.get('title', 'Sem titulo')}",
+        f"Dashboard: {dashboard_meta.get('title', 'Sin título')}",
         f"UID: {dashboard_meta.get('uid', '')}",
-        f"Descricao: {truncate_text(dashboard_meta.get('description') or 'Nao informada.', 600)}",
-        f"Tags: {', '.join(dashboard_meta.get('tags') or []) or 'Sem tags'}",
-        f"Datasources identificados: {', '.join(dashboard_meta.get('datasources') or []) or 'Nao identificado'}",
-        f"Quantidade de paineis: {len(dashboard_meta.get('panels') or [])}",
+        f"Descripción: {truncate_text(dashboard_meta.get('description') or 'No informada.', 600)}",
+        f"Tags: {', '.join(dashboard_meta.get('tags') or []) or 'Sin etiquetas'}",
+        f"Datasources identificados: {', '.join(dashboard_meta.get('datasources') or []) or 'No identificado'}",
+        f"Cantidad de paneles: {len(dashboard_meta.get('panels') or [])}",
     ]
     return "\n".join(lines)
 
 
 def build_panel_metadata_text(dashboard_meta, panel, panel_number):
     lines = [
-        f"Dashboard: {dashboard_meta.get('title', 'Sem titulo')}",
-        f"Painel #{panel_number}",
-        f"Painel ID: {panel.get('id')}",
-        f"Titulo atual: {panel.get('title_raw') or 'Sem titulo definido'}",
-        f"Descricao: {truncate_text(panel.get('description') or 'Nao informada.', 500)}",
-        f"Datasource: {', '.join(panel.get('datasources') or []) or 'Nao identificado'}",
-        f"Tipo de visualizacao: {panel.get('panel_type') or 'Nao identificado'}",
-        f"Unidade principal: {panel.get('unit') or 'Nao informada'}",
+        f"Dashboard: {dashboard_meta.get('title', 'Sin título')}",
+        f"Panel #{panel_number}",
+        f"ID del panel: {panel.get('id')}",
+        f"Título actual: {panel.get('title_raw') or 'Sin título definido'}",
+        f"Descripción: {truncate_text(panel.get('description') or 'No informada.', 500)}",
+        f"Datasource: {', '.join(panel.get('datasources') or []) or 'No identificado'}",
+        f"Tipo de visualización: {panel.get('panel_type') or 'No identificado'}",
+        f"Unidad principal: {panel.get('unit') or 'No informada'}",
     ]
     return "\n".join(lines)
 
@@ -869,15 +869,15 @@ def build_ai_prompt_text(schedule, task_instruction, metadata_text, extra_contex
     user_prompt = truncate_text(schedule.get("ai_prompt_text") or DEFAULT_AI_PROMPT, 5000)
     extra_instruction = truncate_text(schedule.get("report_ai_instruction") or "", 1200)
     parts = [
-        "Voce esta analisando um relatorio operacional do Grafana.",
-        f"Agendamento: {schedule.get('titulo', 'Sem nome')}",
+        "Estás analizando un reporte operacional de Grafana.",
+        f"Programación: {schedule.get('titulo', 'Sin nombre')}",
         task_instruction,
-        "Se faltar contexto, diga isso explicitamente em vez de inventar.",
-        "Responda em texto natural, com paragrafos curtos e fluidos.",
-        "Nao use listas, topicos, marcadores, numeracao ou titulos com #.",
-        "Nao use cercas de codigo, nao devolva JSON e nao formate como Markdown artificial.",
+        "Si falta contexto, indícalo explícitamente en lugar de inventar.",
+        "Responde en texto natural, con párrafos cortos y fluidos.",
+        "No uses listas, tópicos, marcadores, numeración ni títulos con #.",
+        "No uses bloques de código, no devuelvas JSON ni formatees como Markdown artificial.",
         "",
-        "Prompt configurado pelo usuario:",
+        "Prompt configurado por el usuario:",
         user_prompt,
     ]
     metadata_text = truncate_text(metadata_text or "", 6000).strip()
@@ -885,16 +885,16 @@ def build_ai_prompt_text(schedule, task_instruction, metadata_text, extra_contex
         parts.extend(
             [
                 "",
-                "Use os metadados resumidos abaixo junto com a imagem enviada na mesma requisicao.",
+                "Usa los metadatos resumidos a continuación junto con la imagen enviada en la misma solicitud.",
                 "",
-                "Metadados resumidos:",
+                "Metadatos resumidos:",
                 metadata_text,
             ]
         )
     else:
-        parts.extend(["", "Baseie a leitura apenas na imagem enviada nesta requisicao."])
+        parts.extend(["", "Basa el análisis únicamente en la imagen enviada en esta solicitud."])
     if extra_instruction:
-        parts.extend(["", "Instrucoes adicionais do usuario:", extra_instruction])
+        parts.extend(["", "Instrucciones adicionales del usuario:", extra_instruction])
     if extra_context:
         parts.extend(["", extra_context])
     return "\n".join(parts).strip()
@@ -1017,7 +1017,7 @@ def append_markdown_blocks(story, markdown_text, styles, default_style_name="bod
 def normalize_azure_endpoint(endpoint, target):
     value = (endpoint or "").strip()
     if not value:
-        raise ValueError("Endpoint do Azure AI Foundry nao configurado.")
+        raise ValueError("Endpoint de Azure AI Foundry no configurado.")
 
     parsed = urlparse(value)
     path = (parsed.path or "").rstrip("/")
@@ -1103,10 +1103,10 @@ def call_ai_provider(
     max_output_tokens=900,
 ):
     if not api_key:
-        raise ValueError("API Key de IA nao configurada.")
+        raise ValueError("API Key de IA no configurada.")
 
     if provider not in {"openai", "azure", "claude"}:
-        raise ValueError(f"Provedor de IA nao suportado: {provider}")
+        raise ValueError(f"Proveedor de IA no soportado: {provider}")
 
     request_id = str(uuid.uuid4())
     image_data_url = image_bytes_to_data_url(image_bytes, mime_type) if image_bytes else ""
@@ -1136,7 +1136,7 @@ def call_ai_provider(
 
             if provider == "azure":
                 if not endpoint:
-                    raise ValueError("Endpoint do Azure AI Foundry nao configurado.")
+                    raise ValueError("Endpoint de Azure AI Foundry no configurado.")
 
                 endpoint_lower = endpoint.lower()
                 use_responses = "/openai/v1" in endpoint_lower or "/responses" in endpoint_lower
@@ -1243,20 +1243,20 @@ def generate_visual_analysis(schedule, task_instruction, metadata_text, image_by
         )
     except Exception as exc:
         log_message(f"[IA] Analise visual falhou | contexto={context_label} | erro={exc}")
-        return f"Falha ao gerar analise de IA: {exc}"
+        return f"Fallo al generar análisis de IA: {exc}"
 
 
 def generate_missing_panel_title(schedule, dashboard_meta, panel, panel_number, image_bytes):
     if not schedule.get("use_ai") or not panel.get("title_missing"):
-        return panel.get("title") or f"Painel {panel_number}"
+        return panel.get("title") or f"Panel {panel_number}"
 
     runtime = get_ai_runtime(schedule)
     metadata_text = build_panel_metadata_text(dashboard_meta, panel, panel_number)
     prompt_text = (
-        "Voce esta nomeando um painel de dashboard.\n"
-        f"Agendamento: {schedule.get('titulo', 'Sem nome')}\n"
+        "Estás nombrando un panel del dashboard.\n"
+        f"Programación: {schedule.get('titulo', 'Sin nombre')}\n"
         f"{PANEL_TITLE_FALLBACK_PROMPT}\n\n"
-        "Metadados resumidos:\n"
+        "Metadatos resumidos:\n"
         f"{metadata_text}"
     )
     try:
@@ -1271,15 +1271,15 @@ def generate_missing_panel_title(schedule, dashboard_meta, panel, panel_number, 
             context_label=f"titulo-painel-{dashboard_meta['uid']}-{panel['id']}",
         )
         title = " ".join((title or "").split())
-        return truncate_text(title, 120) or f"Painel {panel_number}"
+        return truncate_text(title, 120) or f"Panel {panel_number}"
     except Exception as exc:
         log_message(f"[IA] Falha ao gerar titulo do painel {panel['id']}: {exc}")
-        return f"Painel {panel_number}"
+        return f"Panel {panel_number}"
 
 
 def append_template_title_block(story, schedule, dashboard_meta, styles, template):
     story.append(Paragraph(html.escape(dashboard_meta["title"]), styles["email_title"]))
-    story.append(Paragraph(f"Agendamento: {html.escape(schedule['titulo'])}", styles["muted"]))
+    story.append(Paragraph(f"Programación: {html.escape(schedule['titulo'])}", styles["muted"]))
     story.append(Spacer(1, 0.18 * inch))
 
 def build_detailed_dashboard_pdf(schedule, dashboard_meta, panel_results, output_path, template=None, dashboard_screenshot_bytes=None):
@@ -1306,10 +1306,10 @@ def build_detailed_dashboard_pdf(schedule, dashboard_meta, panel_results, output
         if panel_results:
             story.append(PageBreak())
 
-    if template and template.get("show_summary") and dashboard_meta["panels"]:
-        story.append(Paragraph("Sumario", styles["heading"]))
-        for index, panel in enumerate(dashboard_meta["panels"], start=1):
-            title_for_summary = panel.get("title_raw") or f"Painel {index}"
+    if template and template.get("show_summary") and panel_results:
+        story.append(Paragraph("Resumen", styles["heading"]))
+        for index, panel_result in enumerate(panel_results, start=1):
+            title_for_summary = panel_result.get("resolved_title") or f"Panel {index}"
             story.append(Paragraph(f"{index}. {html.escape(title_for_summary)}", styles["body"]))
         story.append(PageBreak())
 
@@ -1323,7 +1323,7 @@ def build_detailed_dashboard_pdf(schedule, dashboard_meta, panel_results, output
         panel_titles.append(panel_title)
         panel_intro = [Paragraph(html.escape(panel_title), styles["heading"])]
         if panel["description"]:
-            panel_intro.append(Paragraph(f"<b>Descricao:</b> {html.escape(panel['description'])}", styles["body"]))
+            panel_intro.append(Paragraph(f"<b>Descripción:</b> {html.escape(panel['description'])}", styles["body"]))
             panel_intro.append(Spacer(1, 0.08 * inch))
 
         image = PlatypusImage(BytesIO(image_bytes))
@@ -1337,9 +1337,9 @@ def build_detailed_dashboard_pdf(schedule, dashboard_meta, panel_results, output
 
         analysis_text = panel_result.get("analysis_text", "")
         if analysis_text:
-            story.append(Paragraph("Analise", styles["heading"]))
+            story.append(Paragraph("Análisis", styles["heading"]))
             append_markdown_blocks(story, analysis_text, styles)
-            panel_analyses.append(f"Painel {index} - {panel_title}\n{analysis_text}")
+            panel_analyses.append(f"Panel {index} - {panel_title}\n{analysis_text}")
 
     page_chrome = build_page_chrome(template, schedule, styles)
     doc.build(story, onFirstPage=page_chrome, onLaterPages=page_chrome)
@@ -1397,8 +1397,8 @@ async def build_detailed_dashboard_reports(schedule, dashboards, runtime_setting
                     analysis_text = generate_visual_analysis(
                         schedule=schedule,
                         task_instruction=(
-                            "Analise este painel individualmente. Explique o que a visualizacao sugere, quais sinais chamam atencao, "
-                            "se ha risco, anomalia, tendencia, saturacao, degradacao ou ausencia de problema relevante."
+                            "Analiza este panel individualmente. Explica qué sugiere la visualización, qué señales llaman la atención, "
+                            "si hay riesgo, anomalía, tendencia, saturación, degradación o ausencia de problema relevante."
                         ),
                         metadata_text=build_panel_metadata_text(dashboard_meta, panel, index),
                         image_bytes=image_bytes,
@@ -1624,10 +1624,10 @@ def run_schedule(schedule, job_id=None):
                 "schedule_title": schedule["titulo"],
                 "customer_name": schedule["nome_cliente"],
                 "status": "failed",
-                "error_message": "Falha ao gerar relatorios.",
+                "error_message": "Fallo al generar reportes.",
                 "error_details": str(exc),
                 "error_image_base64": build_failure_image_base64(
-                    "Falha ao gerar relatorio",
+                    "Fallo al generar reporte",
                     [schedule.get("titulo", ""), str(exc)],
                 ),
                 "duration_seconds": round(time.monotonic() - started_at, 2),
@@ -1644,11 +1644,11 @@ def run_schedule(schedule, job_id=None):
                 "schedule_title": schedule["titulo"],
                 "customer_name": schedule["nome_cliente"],
                 "status": "failed",
-                "error_message": "Nenhuma dashboard processada.",
-                "error_details": "O agendamento foi executado, mas nenhum PDF foi gerado.",
+                "error_message": "Ningún dashboard procesado.",
+                "error_details": "El agendamiento fue ejecutado, pero no se generó ningún PDF.",
                 "error_image_base64": build_failure_image_base64(
-                    "Nenhuma dashboard processada",
-                    [schedule.get("titulo", ""), "Nenhum PDF foi gerado."],
+                    "Ningún dashboard procesado",
+                    [schedule.get("titulo", ""), "No se generó ningún PDF."],
                 ),
                 "duration_seconds": round(time.monotonic() - started_at, 2),
                 "delivery_methods": schedule.get("delivery_methods", []),
@@ -1663,7 +1663,7 @@ def run_schedule(schedule, job_id=None):
     email_recipients = [item["valor"] for item in recipients if item["tipo"] == "email"]
     telegram_recipients = [item for item in recipients if item["tipo"] == "telegram"]
     attachments = [report["pdf_path"] for report in reports]
-    subject = schedule.get("report_subject") or f"Relatorio | {schedule['titulo']}"
+    subject = schedule.get("report_subject") or f"Reporte | {schedule['titulo']}"
     errors = []
     sent_email_count = 0
     sent_telegram_count = 0
@@ -1702,7 +1702,7 @@ def run_schedule(schedule, job_id=None):
             "error_message": " ; ".join(errors) if errors else "",
             "error_details": "\n".join(errors) if errors else "",
             "error_image_base64": build_failure_image_base64(
-                "Falha no envio do relatorio",
+                "Fallo en el envío del reporte",
                 [schedule.get("titulo", "")] + errors,
             )
             if errors
