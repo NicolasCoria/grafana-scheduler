@@ -1484,6 +1484,8 @@ def send_email(recipients, subject, body_text, attachment_paths):
         attachment.add_header("Content-Disposition", "attachment", filename=os.path.basename(attachment_path))
         message.attach(attachment)
 
+    has_credentials = bool(smtp_settings["username"] and smtp_settings["password"])
+
     def _send_via_smtp(use_tls):
         smtp_class = smtplib.SMTP_SSL if smtp_settings["port"] == 465 else smtplib.SMTP
         with smtp_class(smtp_settings["server"], smtp_settings["port"]) as server:
@@ -1492,13 +1494,18 @@ def send_email(recipients, subject, body_text, attachment_paths):
                 if use_tls:
                     server.starttls()
                     server.ehlo()
-            server.login(smtp_settings["username"], smtp_settings["password"])
+            if has_credentials:
+                server.login(smtp_settings["username"], smtp_settings["password"])
             server.sendmail(smtp_settings["from_email"], recipients, message.as_string())
 
     try:
         _send_via_smtp(smtp_settings["use_tls"])
     except smtplib.SMTPNotSupportedError:
-        raise
+        if has_credentials and not smtp_settings["use_tls"]:
+            # Server likely requires STARTTLS before exposing AUTH — retry with TLS
+            _send_via_smtp(True)
+        else:
+            raise
 
     log_message(f"Envio por e-mail concluido para {len(recipients)} destinatario(s).")
     return len(recipients)

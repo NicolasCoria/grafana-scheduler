@@ -960,8 +960,8 @@ def setup_routes(app):
         smtp_from_email = data.get("smtp_from_email", "").strip()
         smtp_use_tls = 1 if data.get("smtp_use_tls", True) else 0
 
-        if not smtp_server or not smtp_port or not smtp_username or not smtp_from_email:
-            return _json_error("Llene servidor, puerto, usuario y remitente.")
+        if not smtp_server or not smtp_port or not smtp_from_email:
+            return _json_error("Llene servidor, puerto y remitente.")
 
         try:
             normalized_port = int(smtp_port)
